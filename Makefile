@@ -5,20 +5,35 @@ GITMLX	:= https://github.com/codam-coding-college/MLX42.git
 LIBMLX 	:= ./lib/MLX42
 LIBFT	:= ./lib/libft
 
-BREW	:= /Users/$(USER)/.brew
+# BREW	:= /Users/$(USER)/.brew
+BREW	:= $(shell brew --prefix)#va chercher directement le bon brew
 CMAKE	:= $(BREW)/opt/cmake
-GLFW	:= $(BREW)/opt/glfw/lib/
+GLFW	:= "$(BREW)/opt/glfw/lib/"
 
 HEADERS	:= -I./include -I$(LIBMLX)/include -I$(LIBFT)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -lglfw -L$(GLFW)
 SRCDIR	:= ./src
 OBJDIR	:= ./obj
 
-SRCS	:= 
+SRCS	:=	main.c \
+			
+
+# -- COLORS -- #
+BLACK=\033[0;30m# Black
+RED=\033[0;31m# Red
+GREEN=\033[0;32m# GREEN
+YELLOW=\033[0;33m# YELLOW
+BLUE=\033[0;34m# BLUE
+PURPLE=\033[0;35m# PURPLE
+CYAN=\033[0;36m# CYAN
+WHITE=\033[0m# WHITE
+
+BOLD=\033[1m
+
 OBJS	:= $(addprefix $(OBJDIR)/, ${SRCS:.c=.o})
 
-
 all: $(NAME)
+
 
 $(LIBMLX):
 	@git clone $(GITMLX) $(LIBMLX)
@@ -35,7 +50,7 @@ $(OBJDIR):
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@cc $(CLFAGS) -o $@ -c $< $(HEADERS) \
-		&& printf "\e[1;32mCompiling:\e[0m $(notdir $<)\n"
+		&& printf "$(GREEN)$(BOLD)Compiling:$(WHITE) $(notdir $<)\n"
 
 $(NAME): $(LIBMLX)/build $(LIBFT)/libft.a $(OBJDIR) $(OBJS)
 	@cc $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)

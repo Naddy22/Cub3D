@@ -10,13 +10,15 @@ BREW	:= $(shell brew --prefix)#va chercher directement le bon brew
 CMAKE	:= $(BREW)/opt/cmake
 GLFW	:= "$(BREW)/opt/glfw/lib/"
 
-HEADERS	:= -I./include -I$(LIBMLX)/include -I$(LIBFT)/include
+HEADERS	:= -I./include -I$(LIBMLX)/include -I$(LIBFT)
 LIBS	:= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -lglfw -L$(GLFW)
 SRCDIR	:= ./src
 OBJDIR	:= ./obj
 
 SRCS	:=	main.c \
-			
+			parsing.c \
+			error.c \
+			init.c \
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black

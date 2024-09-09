@@ -3,49 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: jdemers <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 10:23:36 by vboulang          #+#    #+#             */
-/*   Updated: 2024/06/04 14:39:24 by vboulang         ###   ########.fr       */
+/*   Created: 2023/10/23 14:32:40 by jdemers           #+#    #+#             */
+/*   Updated: 2024/03/11 18:06:31 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
-int	ft_lstsize(t_liblst *lst)
+int	ft_lstsize(t_list *lst)
 {
-	int		len;
+	int	i;
 
-	len = 0;
-	if (!lst)
-		return (0);
+	i = 0;
 	while (lst)
 	{
-		len++;
 		lst = lst->next;
+		i++;
 	}
-	return (len);
+	return (i);
 }
-/*
-#include <stdio.h>
 
-int	main()
+int	ft_loopsize(t_list *loop)
 {
-	t_list *lst1;
-	t_list *lst2;
-	t_list *lst3;
-	t_list *lst4;
-	char *s1 = "lst1";
-	char *s2 = "lst2";
-	char *s3 = "lst3";
-	char *s4 = "lst4";
+	t_list	*start;
+	int		i;
 
-	lst1 = ft_lstnew(s1);
-	lst2 = ft_lstnew(s2);
-	lst3 = ft_lstnew(s3);
-	lst4 = ft_lstnew(s4);
-	lst1->next = lst2;
-	lst2->next = lst3;
-	lst3->next = lst4;
-	printf("%d\n", ft_lstsize(lst1));
-}*/
+	if (loop == NULL)
+		return (0);
+	start = loop;
+	loop = loop->next;
+	i = 1;
+	while (loop != start)
+	{
+		i++;
+		loop = loop->next;
+	}
+	return (i);
+}

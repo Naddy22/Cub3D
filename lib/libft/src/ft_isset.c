@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   ft_isset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jdemers <jdemers@student.42quebec.>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 13:45:10 by namoisan          #+#    #+#             */
-/*   Updated: 2023/10/19 13:51:40 by namoisan         ###   ########.fr       */
+/*   Created: 2024/06/25 17:54:08 by jdemers           #+#    #+#             */
+/*   Updated: 2024/06/25 17:58:25 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isprint(int c)
+int	ft_isset(int c, const char *set)
 {
-	if (c >= 32 && c <= 126)
-		return (1);
-	else
+	if (c == 0)
 		return (0);
+	while (*set)
+	{
+		if (c == (int)*set)
+			return (1);
+		set++;
+	}
+	return (0);
 }

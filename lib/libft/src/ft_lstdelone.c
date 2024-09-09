@@ -1,50 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: jdemers <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 11:16:57 by vboulang          #+#    #+#             */
-/*   Updated: 2024/06/04 14:39:39 by vboulang         ###   ########.fr       */
+/*   Created: 2023/10/23 14:48:33 by jdemers           #+#    #+#             */
+/*   Updated: 2024/03/11 18:32:54 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "../libft.h"
-
-void	ft_lstdelone(t_liblst *lst, void (*del)(void *))
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	if (!lst || !del)
-		return ;
-	del(lst->content);
+	(*del)(lst->data);
 	free(lst);
 }
-/*
-#include <stdio.h>
-
-int main()
-{
-	t_list *lst1;
-	t_list *lst2;
-	t_list *lst3;
-	t_list *lst4;
-	char *s1 = "lst1";
-	char *s2 = "lst2";
-	char *s3 = "lst3";
-	char *s4 = "lst4";
-
-	lst1 = ft_lstnew(s1);
-	lst2 = ft_lstnew(s2);
-	lst3 = ft_lstnew(s3);
-	lst4 = ft_lstnew(s4);
-	lst1->next = lst2;
-	lst2->next = lst3;
-	ft_lstadd_front(&lst1, lst4);
-	/////
-	t_list *temp = lst1;
-	while(temp)
-	{
-		printf("%s\n", temp->content);
-		temp = temp->next;
-	}
-}*/

@@ -3,52 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: jdemers <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 12:29:31 by namoisan          #+#    #+#             */
-/*   Updated: 2024/02/22 13:23:44 by namoisan         ###   ########.fr       */
+/*   Created: 2023/10/17 15:12:32 by jdemers           #+#    #+#             */
+/*   Updated: 2023/10/19 10:11:00 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
-
-static int	ft_atoi_part(const char *str)
+static int	ft_isspace(char c)
 {
-	int	i;
-	int	result;
-
-	i = 0;
-	result = 0;
-	while (str[i] != '\0' && str[i] >= '0' && str[i] <= '9')
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-			result = result * 10 + (str[i] - 48);
-		i++;
-	}
-	return (result);
+	if (c == '\t' || c == '\v' || c == '\f')
+		return (1);
+	if (c == '\r' || c == '\n' || c == ' ')
+		return (1);
+	return (0);
 }
 
 int	ft_atoi(const char *str)
 {
-	int	i;
-	int	sign;
-	int	result;
+	int		i;
+	short	sign;
+	int		pow10;
+	int		total;
 
 	i = 0;
 	sign = 1;
-	result = 0;
-	if (str == 0)
-		return (0);
-	if (str[i] == '\0')
-		return (0);
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	pow10 = 1;
+	total = 0;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '+' || *str == '-')
 	{
-		if (str[i] == '-')
-			sign = sign * (-1);
-		i++;
+		if (*str++ == '-')
+			sign = -1;
 	}
-	result = ft_atoi_part(&str[i]);
-	return (result * sign);
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+		i++;
+	while (--i >= 0)
+	{
+		total += (str[i] - 48) * pow10 * sign;
+		pow10 *= 10;
+	}
+	return (total);
 }

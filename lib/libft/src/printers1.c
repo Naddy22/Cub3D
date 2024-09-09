@@ -1,20 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   printers1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jdemers <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 13:45:12 by jdemers           #+#    #+#             */
-/*   Updated: 2023/10/19 15:47:07 by jdemers          ###   ########.fr       */
+/*   Created: 2023/10/27 15:36:27 by jdemers           #+#    #+#             */
+/*   Updated: 2024/02/09 14:11:49 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-static int	ft_numlen(int n)
+int	print_char(char c, int fd)
+{
+	ft_putchar_fd(c, fd);
+	return (1);
+}
+
+int	print_string(char *str, int fd)
+{
+	if (!str)
+		return (print_string("(null)", fd));
+	ft_putstr_fd(str, fd);
+	return (ft_strlen(str));
+}
+
+int	print_int(int n, int fd)
 {
 	int	i;
 
+	ft_putnbr_fd(n, fd);
 	i = 0;
 	if (n == 0)
 		return (1);
@@ -28,36 +44,20 @@ static int	ft_numlen(int n)
 	return (i);
 }
 
-char	*ft_itoa(int n)
+int	print_unsigned_int(unsigned int n, int fd)
 {
-	char	*s;
-	int		num_len;
+	int	i;
 
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	num_len = ft_numlen(n);
-	s = ft_calloc(num_len + 1, sizeof(char));
-	if (!s)
-		return (NULL);
-	if (n < 0)
-	{
-		s[0] = '-';
-		n *= -1;
-	}
-	else if (n == 0)
-		s[0] = '0';
-	num_len--;
+	if (n > 9)
+		ft_putnbr_fd(n / 10, fd);
+	ft_putchar_fd((char)(n % 10 + '0'), fd);
+	i = 0;
+	if (n == 0)
+		return (1);
 	while (n > 0)
 	{
-		s[num_len--] = n % 10 + '0';
 		n /= 10;
+		i++;
 	}
-	return (s);
+	return (i);
 }
-/*
-#include <stdio.h>
-int	main(void)
-{
-	printf("%s\n", ft_itoa(-9));
-	return (0);
-}*/

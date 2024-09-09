@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jdemers <jdemers@student.42quebec.>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/21 10:37:27 by namoisan          #+#    #+#             */
-/*   Updated: 2023/10/24 09:53:05 by namoisan         ###   ########.fr       */
+/*   Created: 2023/12/18 14:49:10 by jdemers           #+#    #+#             */
+/*   Updated: 2024/05/02 19:51:00 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int	ft_tolower(int c)
+char	**ft_free_split(char **split)
 {
-	if (c >= 'A' && c <= 'Z')
-		return (c + 32);
-	return (c);
+	int	i;
+
+	if (!split)
+		return (NULL);
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		split[i] = NULL;
+		i++;
+	}
+	free(split);
+	return (NULL);
 }

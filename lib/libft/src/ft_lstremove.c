@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_lstremove.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdemers <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: jdemers <jdemers@student.42quebec.>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 10:42:34 by jdemers           #+#    #+#             */
-/*   Updated: 2023/10/19 15:06:43 by jdemers          ###   ########.fr       */
+/*   Created: 2024/03/07 11:56:53 by jdemers           #+#    #+#             */
+/*   Updated: 2024/03/21 18:14:05 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+void	ft_lstremove(t_list **lst, void (*del)(void *))
 {
-	size_t	len;
-	char	*copy;
-	size_t	i;
+	t_list	*target;
 
-	len = ft_strlen(s1);
-	copy = malloc(len + 1);
-	if (!copy)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		copy[i] = s1[i];
-		i++;
-	}
-	copy[len] = '\0';
-	return (copy);
+	target = *lst;
+	target->prev->next = target->next;
+	target->next->prev = target->prev;
+	if (target->next == NULL)
+		*lst = target->prev;
+	else
+		*lst = target->next;
+	ft_lstdelone(target, del);
 }

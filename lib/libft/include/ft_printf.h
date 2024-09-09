@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jdemers <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 10:42:34 by jdemers           #+#    #+#             */
-/*   Updated: 2023/10/19 15:06:43 by jdemers          ###   ########.fr       */
+/*   Created: 2023/10/27 15:06:22 by jdemers           #+#    #+#             */
+/*   Updated: 2024/02/09 14:54:52 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-char	*ft_strdup(const char *s1)
-{
-	size_t	len;
-	char	*copy;
-	size_t	i;
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-	len = ft_strlen(s1);
-	copy = malloc(len + 1);
-	if (!copy)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		copy[i] = s1[i];
-		i++;
-	}
-	copy[len] = '\0';
-	return (copy);
-}
+int	print_char(char c, int fd);
+int	print_string(char *str, int fd);
+int	print_ptr(void *ptr, int fd);
+int	print_int(int n, int fd);
+int	print_hex(unsigned long n, char type, int fd);
+int	print_unsigned_int(unsigned int n, int fd);
+
+#endif

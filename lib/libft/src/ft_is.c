@@ -1,39 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_is.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jdemers <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 11:52:54 by jdemers           #+#    #+#             */
-/*   Updated: 2023/10/20 14:07:00 by jdemers          ###   ########.fr       */
+/*   Created: 2023/10/16 10:47:07 by jdemers           #+#    #+#             */
+/*   Updated: 2023/10/17 11:26:53 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-static int	is_trim(char c, const char *set)
+int	ft_isalpha(int c)
 {
-	while (*set)
-	{
-		if (c == *set)
-			return (1);
-		set++;
-	}
+	if (c >= 'A' && c <= 'Z')
+		return (1);
+	if (c >= 'a' && c <= 'z')
+		return (1);
 	return (0);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+int	ft_isdigit(int c)
 {
-	unsigned int	start;
-	size_t			end;
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
 
-	start = 0;
-	end = ft_strlen(s1);
-	if (end > 0)
-		end--;
-	while (is_trim(s1[start], set))
-		start++;
-	while (is_trim(s1[end], set))
-		end--;
-	return (ft_substr(s1, start, end - start + 1));
+int	ft_isalnum(int c)
+{
+	return (ft_isalpha(c) || ft_isdigit(c));
+}
+
+int	ft_isascii(int c)
+{
+	if (c >= 0 && c <= 127)
+		return (1);
+	return (0);
+}
+
+int	ft_isprint(int c)
+{
+	if (c >= 32 && c <= 126)
+		return (1);
+	return (0);
 }

@@ -3,34 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: jdemers <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 17:25:20 by vboulang          #+#    #+#             */
-/*   Updated: 2024/06/04 14:39:28 by vboulang         ###   ########.fr       */
+/*   Created: 2023/10/23 13:37:50 by jdemers           #+#    #+#             */
+/*   Updated: 2024/03/11 18:31:29 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
-t_liblst	*ft_lstnew(void *content)
+t_list	*ft_lstnew(void *content)
 {
-	t_liblst	*lst;
+	t_list	*new;
 
-	lst = malloc(sizeof(t_liblst));
-	if (!lst)
+	new = malloc(sizeof(t_list));
+	if (!new)
 		return (NULL);
-	lst->content = content;
-	lst->next = NULL;
-	return (lst);
+	new->data = content;
+	new->next = NULL;
+	new->prev = NULL;
+	return (new);
 }
-/*
-#include <stdio.h>
 
-int	main()
+t_list	*ft_loopnew(void *content)
 {
-	t_list *lst;
-	char	*l="65";
+	t_list	*new;
 
-	lst = ft_lstnew(l);
-	printf("%s\n", lst->content);
-}*/
+	new = malloc(sizeof(t_list));
+	if (!new)
+		return (NULL);
+	new->data = content;
+	new->next = new;
+	new->prev = new;
+	return (new);
+}

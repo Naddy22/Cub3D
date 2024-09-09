@@ -3,41 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jdemers <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 09:20:58 by namoisan          #+#    #+#             */
-/*   Updated: 2023/12/19 11:07:12 by namoisan         ###   ########.fr       */
+/*   Created: 2023/10/16 13:45:25 by jdemers           #+#    #+#             */
+/*   Updated: 2023/10/17 10:23:42 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "../libft.h"
-
-static	void	*ft_memcpy_reverse(void *dst, const void *src, size_t n)
+static void	move(char *dst, char *src, size_t len)
 {
-	char		*dst_i;
-	const char	*src_i;
+	size_t	i;
 
-	dst_i = (char *)dst;
-	src_i = (const char *)src;
-	if (dst == NULL || src == NULL)
-		return (0);
-	while (n > 0)
+	i = 0;
+	while (i < len)
 	{
-		n--;
-		dst_i[n] = src_i[n];
+		dst[i] = src[i];
+		i++;
 	}
-	return (dst);
+}
+
+static void	revmove(char *dst, char *src, size_t len)
+{
+	size_t	i;
+
+	i = len;
+	while (i > 0)
+	{
+		i--;
+		dst[i] = src[i];
+	}
 }
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	if (dst == src)
-		return (dst);
-	if (dst == NULL || src == NULL)
-		return (0);
 	if (dst < src)
-		ft_memcpy(dst, src, len);
-	else
-		ft_memcpy_reverse(dst, src, len);
+		move((char *)dst, (char *)src, len);
+	else if (dst > src)
+		revmove((char *)dst, (char *)src, len);
 	return (dst);
 }
+/*
+#include <stdio.h>
+int	main(void)
+{
+	char s1[11] = "0123456789";
+	char s2[11] = "abcdefghij";
+
+	ft_memmove(s1, s1 + 2, 4);
+	ft_memmove(s2 + 2, s2, 4);
+	printf("s1 = %s \t s2 = %s\n", (char*)s1, (char*)s2);
+	return (0);
+}*/

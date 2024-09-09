@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: jdemers <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 12:39:00 by vboulang          #+#    #+#             */
-/*   Updated: 2024/06/04 14:39:42 by vboulang         ###   ########.fr       */
+/*   Created: 2023/10/23 14:55:47 by jdemers           #+#    #+#             */
+/*   Updated: 2024/03/11 17:56:01 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
-void	ft_lstclear(t_liblst **lst, void (*del)(void *))
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_liblst	*temp;
-	t_liblst	*list;
+	t_list	*next;
 
-	if (!lst || !del)
-		return ;
-	list = *lst;
-	while (list)
+	while (*lst)
 	{
-		temp = list->next;
-		ft_lstdelone(list, del);
-		list = temp;
+		next = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = next;
 	}
-	free(list);
-	*lst = NULL;
+}
+
+void	ft_loopclear(t_list **loop, void (*del)(void *))
+{
+	(*loop)->prev->next = NULL;
+	ft_lstclear(loop, del);
 }

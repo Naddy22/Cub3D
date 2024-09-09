@@ -3,63 +3,97 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jdemers <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 13:49:19 by namoisan          #+#    #+#             */
-/*   Updated: 2023/12/19 11:07:37 by namoisan         ###   ########.fr       */
+/*   Created: 2023/10/26 10:25:56 by jdemers           #+#    #+#             */
+/*   Updated: 2024/02/09 14:53:30 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include <stdarg.h>
+#include "ft_printf.h"
 
-int	ft_printf(const char *str, ...)
+static int	print_arg(int fd, char type, va_list args)
 {
-	int		i;
-	int		printf_size;
-	va_list	args;
-
-	va_start(args, str);
-	i = 0;
-	printf_size = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '%')
-		{
-			printf_size += ft_check_pourcent(str[i + 1], args);
-			i = i + 2;
-		}
-		else
-		{
-			printf_size += ft_putchar(str[i]);
-			i++;
-		}
-	}
-	va_end(args);
-	return (printf_size);
+	if (type == 'c')
+		return (print_char(va_arg(args, int), fd));
+	if (type == 's')
+		return (print_string(va_arg(args, char *), fd));
+	if (type == 'p')
+		return (print_ptr(va_arg(args, void *), fd));
+	if (type == 'd' || type == 'i')
+		return (print_int(va_arg(args, int), fd));
+	if (type == 'x' || type == 'X')
+		return (print_hex(va_arg(args, unsigned int), type, fd));
+	if (type == 'u')
+		return (print_unsigned_int(va_arg(args, unsigned int), fd));
+	if (type == '%')
+		return (print_char('%', fd));
+	return (-1);
 }
 
-// #include <stdio.h>
-// int	main(void)
-// {
-// 	int		nb1;
-// 	int		nb2;
-// 	char	str[] = "Bouyaaaa";
+int	ft_printf(const char *format, ...)
+{
+	va_list			args;
+	unsigned int	printed;
+	unsigned int	tmp;
 
-// 	nb1 = -4516;
-// 	nb2 = 12454;
-// 	ft_printf("moi :%%cacahuete\n");
-// 	ft_printf("moi :cacahuete %c", 'r');
-// 	ft_printf("\n");
-// 	ft_printf("moi :cacahuete %s\n", "rose");
-// 	ft_printf("moi :%c cacahuete %s\n", 'N', "rose");
-// 	ft_printf("moi :%d et %i cacahuete\n", nb1, nb2);
-// 	ft_printf("moi: unsigned int -> %u\n", nb2);
-// 	printf("vrai: unsigned int -> %u\n", nb2);
-// 	ft_printf("Moi: adresse du pointeur: %p\n", str);
-// 	printf("vrai: adresse du pointeur: %p\n", str);
-// 	ft_printf("moi: nombre hexadecimal %x\n", nb2);
-// 	printf("vrai: nombre hexadecimal %x\n", nb2);
-// 	ft_printf("moi: nombre hexadecimal %X\n", nb2);
-// 	printf("vrai: nombre hexadecimal %X\n", nb2);
-// 	return (0);
-// }
+	va_start(args, format);
+	printed = 0;
+	while (*format)
+	{
+		if (*format == '%')
+		{
+			tmp = print_arg(1, *(++format), args);
+			if (tmp < 0)
+			{
+				va_end(args);
+				return (tmp);
+			}
+			printed += tmp;
+		}
+		else
+			printed += print_char(*format, 1);
+		format++;
+	}
+	va_end(args);
+	return (printed);
+}
+
+int	ft_dprintf(int fd, const char *format, ...)
+{
+	va_list			args;
+	unsigned int	printed;
+	unsigned int	tmp;
+
+	va_start(args, format);
+	printed = 0;
+	while (*format)
+	{
+		if (*format == '%')
+		{
+			tmp = print_arg(fd, *(++format), args);
+			if (tmp < 0)
+			{
+				va_end(args);
+				return (tmp);
+			}
+			printed += tmp;
+		}
+		else
+			printed += print_char(*format, fd);
+		format++;
+	}
+	va_end(args);
+	return (printed);
+}
+
+/*
+int	main(void)
+{
+	int	a;
+
+	a = ft_printf("Hello %d, this is a %s\n", 42, "test");
+	ft_printf("I printed %i characters\n", a);
+	return (0);
+}*/

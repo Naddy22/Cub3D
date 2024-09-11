@@ -4,6 +4,7 @@
 # include "MLX42/MLX42.h"
 # include "libft.h"
 # include <stdbool.h>
+# include <fcntl.h>
 
 // define de base
 # define SUCCESS 0
@@ -41,12 +42,28 @@ typedef struct s_player
 typedef struct s_game
 {
 	char	**map;
+	char	*no_texture;
+	char	*so_texture;
+	char	*we_texture;
+	char	*ea_texture;
+	char	*f_color;
+	char	*c_color;
 }	t_game;
 
 //parsing.c
 void	parsing(char *file, t_game *game);
 
 //error.c
-void	error_exit(char *error);
+void	ft_error_exit(char *error);
+
+//identifiers.c
+int	ft_get_identifiers(t_game *game, char *line);
+
+//color.c
+char	*ft_set_color(char *trim_line, char *line);
+
+//free.c
+void	ft_free_game(t_game *game);
+void	ft_free_all(t_game *game);
 
 #endif

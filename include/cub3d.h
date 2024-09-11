@@ -3,12 +3,21 @@
 
 # include "MLX42/MLX42.h"
 # include "libft.h"
+# include "vect.h"
 # include <stdbool.h>
 
 // define de base
 # define SUCCESS 0
 # define FAIL 1
 # define ERROR 2
+
+enum e_wall_side
+{
+	SOUTH = -3,
+	WEST = -1,
+	EAST,
+	NORTH,
+};
 
 // typedef struct s_map
 // {
@@ -17,25 +26,24 @@
 
 typedef struct s_ray
 {
-	double	sideDistX;
-	double	sideDistY;
-	double	dirX;
-	double	dirY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
 	int		mapX;
 	int		mapY;
+	t_vect	dir;
+	double	deltaX;
+	double	deltaY;
+	double	sideDistX;
+	double	sideDistY;
+	int		stepX;
+	int		stepY;
+	int		side;
 }	t_ray;
 
 typedef struct s_player
 {
 	double	posX;
 	double	posY;
-	double	dirX;
-	double	dirY;
-	double	fovX;
-	double	fovY;
+	t_vect	dir;
+	t_vect	fov;
 }	t_player;
 
 typedef struct s_game

@@ -10,14 +10,37 @@
 # define FAIL 1
 # define ERROR 2
 
-typedef struct s_map
-{
+// typedef struct s_map
+// {
+// 	char	**data;
+// }	t_map;
 
-}	t_map;
+typedef struct s_ray
+{
+	double	sideDistX;
+	double	sideDistY;
+	double	dirX;
+	double	dirY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+	int		mapX;
+	int		mapY;
+}	t_ray;
+
+typedef struct s_player
+{
+	double	posX;
+	double	posY;
+	double	dirX;
+	double	dirY;
+	double	fovX;
+	double	fovY;
+}	t_player;
 
 typedef struct s_game
 {
-
+	char	**map;
 }	t_game;
 
 //parsing.c

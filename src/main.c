@@ -9,6 +9,6 @@ int main(int argc, char **argv)
 		parsing(argv[1], &game);
 	}
 	else
-		error_exit("Usage: ./cub3D [file.cub]\n");
+		ft_error_exit("Usage: ./cub3D [file.cub]\n");
 	return (0);
 }

@@ -7,8 +7,8 @@ char	*ft_set_color(char *trim_line, char *line)
 	char *result;
 
 	count = 0;
-	i = 0;
-	while (trim_line != '\0')
+	i = -1;
+	while (trim_line[++i] != '\0')
 		if (trim_line[i] == ',')
 			count++;
 	if (count != 2)

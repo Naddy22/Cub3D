@@ -5,6 +5,8 @@
 # include "libft.h"
 # include <stdbool.h>
 # include <fcntl.h>
+# include <unistd.h>
+# include <stdio.h>
 
 // define de base
 # define SUCCESS 0
@@ -57,7 +59,8 @@ void	parsing(char *file, t_game *game);
 void	ft_error_exit(char *error);
 
 //identifiers.c
-int	ft_get_identifiers(t_game *game, char *line);
+int		ft_get_identifiers(t_game *game, char *line);
+bool	ft_is_valid_path(t_game *game);
 
 //color.c
 char	*ft_set_color(char *trim_line, char *line);

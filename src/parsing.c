@@ -31,7 +31,7 @@ static char *ft_get_infos(t_game *game, int fd, int *id_count)
 			if (result == -1)
 				return (line);
 			else
-				id_count++;
+				(*id_count)++;
 		}
 		free(line);
 	}
@@ -44,6 +44,7 @@ void parsing(char *file, t_game *game)
 	char	*map_line;
 	int		id_count;
 
+	id_count = 0;
 	ft_bzero(game, sizeof(t_game));
 	if (ft_check_file_name(file) != true)
 		ft_error_exit("Filename must end with .cub\n");
@@ -51,9 +52,10 @@ void parsing(char *file, t_game *game)
 	if (fd < 0)
 		ft_error_exit("Opening file\n");
 	map_line = ft_get_infos(game, fd, &id_count);
-	if (!map_line || id_count != 6 || )
+	if (!map_line || id_count != 6 || ft_is_valid_path(game) != true)
 	{
 		close(fd);
 		ft_free_game(game);
+		ft_error_exit("Identifiers invalid\n");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:13:12 by jdemers           #+#    #+#             */
-/*   Updated: 2024/09/12 15:17:45 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/12 15:53:55 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int		ft_isset(int c, const char *set);
 char	**ft_free_split(char **split);
 int		ft_min(int a, int b);
 int		ft_max(int a, int b);
+
+void	ft_free_verif(void **ptr);
 
 typedef struct s_list
 {

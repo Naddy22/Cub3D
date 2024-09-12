@@ -19,6 +19,9 @@ SRCS	:=	main.c \
 			parsing.c \
 			error.c \
 			init.c \
+			identifiers.c \
+			color.c \
+			free.c \
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black

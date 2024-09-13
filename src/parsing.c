@@ -38,7 +38,7 @@ static char *ft_get_infos(t_game *game, int fd, int *id_count)
 	return (NULL);
 }
 
-void parsing(char *file, t_game *game)
+void	parsing(char *file, t_game *game)
 {
 	int		fd;
 	char	*map_line;
@@ -58,4 +58,5 @@ void parsing(char *file, t_game *game)
 		ft_free_game(game);
 		ft_error_exit("Identifiers invalid\n");
 	}
+	parse_map(fd, map_line, game);
 }

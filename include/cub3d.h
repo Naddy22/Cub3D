@@ -19,10 +19,10 @@
 
 enum e_wall_side
 {
-	SOUTH = -3,
-	WEST = -1,
+	SOUTH = 0,
 	EAST,
 	NORTH,
+	WEST,
 };
 
 // typedef struct s_map
@@ -68,6 +68,7 @@ typedef struct s_game
 	char	*so_texture;
 	char	*we_texture;
 	char	*ea_texture;
+	char	*wall_tex[4];
 	char	*f_color;
 	char	*c_color;
 }	t_game;

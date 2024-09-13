@@ -45,15 +45,15 @@ void	cast_ray(const char **map, t_player *perp, t_ray *ray)
 		{
 			ray->map_x += ray->step_x;
 			ray->ray_dist_x += ray->delta_x;
-			ray->side = 1;
+			ray->side = 2;
 		}
 		else
 		{
 			ray->map_y += ray->step_y;
 			ray->ray_dist_y += ray->delta_y;
-			ray->side = 3;
+			ray->side = 1;
 		}
-		if (map[ray->map_x][ray->map_y] != '0')
+		if (map[ray->map_y][ray->map_x] == '0')
 			break ;
 	}
 	if (ray->side == 1)

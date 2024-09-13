@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:13:12 by jdemers           #+#    #+#             */
-/*   Updated: 2024/09/12 15:53:55 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/13 11:46:40 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ char	**ft_free_split(char **split);
 int		ft_min(int a, int b);
 int		ft_max(int a, int b);
 
-void	ft_free_verif(void **ptr);
+void			ft_free_verif(void **ptr);
+long long int	ft_atol(const char *str);
 
 typedef struct s_list
 {

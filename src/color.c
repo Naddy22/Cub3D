@@ -26,3 +26,67 @@ char	*ft_set_color(char *trim_line, char *line)
 		}
 	return (result);
 }
+
+static bool	ft_color_is_valid(char **split_c)
+{
+	int i;
+	int j;
+
+	if (!split_c[0] || !split_c[1] || !split_c[2])
+		return (false);
+	i = 0;
+	while (split_c[i])
+	{
+		j = 0;
+		while (split_c[i][j])
+		{
+			if (ft_isspace(split_c[i][j]) || !ft_isdigit(split_c[i][j]))
+				return (false);
+			j++;
+		}
+		if (ft_atol(split_c[i]) < 0 || ft_atol(split_c[i]) > 255)
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+static void	get_rgb(unsigned int *rgb, char **split)
+{
+	int i;
+
+	i = 0;
+	while (i < 3)
+	{
+		rgb[i] = ft_atoi(split[i]);
+		i++;
+	}
+}
+
+void	convert_color(t_game *game)
+{
+	char			**floor;
+	char			**ceiling;
+	unsigned int	rgb[3];
+
+	floor = ft_split(game->color[FLOOR], ',');
+	ceiling = ft_split(game->color[CEILING], ',');
+	if (!floor || !ceiling)
+	{
+		free(floor);
+		free(ceiling);
+		ft_free_error("Malloc failed\n", game);
+	}
+	if (ft_color_is_valid(floor) != true || ft_color_is_valid(ceiling) != true)
+	{
+		free(floor);
+		free(ceiling);
+		ft_free_error("Invalid color\n", game);
+	}
+	get_rgb(rgb, floor);
+	game->f_rgba = rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255;
+	get_rgb(rgb, ceiling);
+	game->c_rgba = rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255;
+	ft_free_split(floor); 
+	ft_free_split(ceiling);
+}

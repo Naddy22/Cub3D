@@ -58,4 +58,5 @@ void parsing(char *file, t_game *game)
 		ft_free_game(game);
 		ft_error_exit("Identifiers invalid\n");
 	}
+	convert_color(game);
 }

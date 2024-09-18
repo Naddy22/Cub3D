@@ -49,14 +49,15 @@ void	parsing(char *file, t_game *game)
 	if (ft_check_file_name(file) != true)
 		ft_error_exit("Filename must end with .cub\n");
 	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		ft_error_exit("Opening file\n");
+	if (read(fd, 0, 0) < 0)
+		ft_error_exit("Could not open file\n");
 	map_line = ft_get_infos(game, fd, &id_count);
-	if (!map_line || id_count != 6 || ft_is_valid_path(game) != true)
+	if (!map_line || id_count != 6 || !ft_is_valid_path(game)
+		|| parse_map(fd, map_line, game) == FAIL)
 	{
 		close(fd);
 		ft_free_game(game);
-		ft_error_exit("Identifiers invalid\n");
+		ft_error_exit("Map file invalid\n");
 	}
-	parse_map(fd, map_line, game);
+	close(fd);
 }

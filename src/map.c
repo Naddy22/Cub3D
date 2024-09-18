@@ -1,43 +1,84 @@
 #include "cub3d.h"
-static void	map_err_exit(t_game *game, t_list *lst, char *line, const char *msg)
-{
-	ft_free_game(game);
-	ft_lstclear(&lst, free);
-	free(line);
-	ft_error_exit(msg);
-}
 
 static void	not_free(void *s)
 {
 	(void)s;
 }
 
-static void	store_map(t_game *game, t_list *lst, int m)
+static void	set_start_pos(t_player *perp, int x, int y, char dir_char)
 {
-	int	x;
-	int	y;
-	int	n;
+	perp->pos_x = (double)x;
+	perp->pos_y = (double)y;
+	if (dir_char == 'N' || dir_char == 'S')
+	{
+		perp->dir.x = 0e0;
+		perp->dir.y = 1e0;
+		if (dir_char == 'N')
+			perp->dir.y *= -1;
+	}
+	else
+	{
+		perp->dir.y = 0e0;
+		perp->dir.x = 1e0;
+		if (dir_char == 'W')
+			perp->dir.x *= -1;
+	}
+	perp->fov.x = perp->dir.y * FOV;
+	perp->fov.y = perp->dir.x * FOV;
+}
+
+static int	verify_map_tile(t_game *g, int x, int y, int m)
+{
+	static bool	start_pos = false;
+
+	if (g->map[y][x] == '1' || g->map[y][x] == ' ')
+		return (SUCCESS);
+	if (!ft_isset(g->map[y][x], "0NSEW") || x == 0 || g->map[y][x - 1] == ' ')
+		return (FAIL);
+	if (!g->map[y][x + 1] || g->map[y][x + 1] == ' ')
+		return (FAIL);
+	if (y == 0 || ft_strlen(g->map[y - 1]) <= x || g->map[y - 1][x] == ' ')
+		return (FAIL);
+	if (y >= m || ft_strlen(g->map[y + 1]) <= x || g->map[y + 1][x] == ' ')
+		return (FAIL);
+	if (g->map[y][x] == '0')
+		return (SUCCESS);
+	if (start_pos)
+		return (FAIL);
+	start_pos = true;
+	set_start_pos(&g->perp, x, y, g->map[y][x]);
+	return (SUCCESS);
+}
+
+static int	store_map(t_game *game, t_list *lst, int m)
+{
+	int		x;
+	int		y;
+	int		n;
 
 	y = m;
 	while (--y >= 0)
 	{
 		game->map[y] = lst->data;
-		lst = lst->next;
+		ft_lstpop(&lst, not_free);
 	}
-	ft_lstclear(&lst, not_free);
 	while (++y < m)
 	{
-		x = -1;
+		x = 0;
 		n = ft_strlen(game->map[y]);
-		while (++x < n)
-		{
-			if (verify_map_tile(game->map, x, y) == FAIL)
-				map_err_exit(game, NULL, NULL, "Invalid map\n");
-		}
+		if (game->map[y][n - 1] == '\n')
+			game->map[y][--n] = '\0';
+		while (x < n && verify_map_tile(game, x, y, m) == SUCCESS)
+			x++;
+		if (x < n)
+			return (FAIL);
 	}
+	if (game->perp.pos_x == 0e0)
+		return (FAIL);
+	return (SUCCESS);
 }
 
-void	parse_map(int fd, char *map_line, t_game *game)
+int	parse_map(int fd, char *map_line, t_game *game)
 {
 	t_list	*lst;
 	t_list	*item;
@@ -47,18 +88,14 @@ void	parse_map(int fd, char *map_line, t_game *game)
 	{
 		item = ft_lstnew(map_line);
 		if (!item)
-		{
-			close(fd);
-			map_err_exit(game, &lst, map_line, "Malloc failed\n");
-		}
+			return (ft_lstclear(&lst, free), free(map_line), FAIL);
 		ft_lstadd_front(&lst, item);
-		get_next_line(fd);
+		map_line = get_next_line(fd);
 	}
-	close(fd);
 	while (((char *)lst->data)[0] == '\n')
 		ft_lstpop(&lst, free);
 	game->map = ft_calloc(ft_lstsize(lst) + 1, sizeof(char *));
 	if (!game->map)
-		map_err_exit(game, lst, NULL, "Malloc failed\n");
-	store_map(game, lst, ft_lstsize(lst));
+		return (ft_lstclear(&lst, free), FAIL);
+	return (store_map(game, lst, ft_lstsize(lst)));
 }

@@ -6,10 +6,11 @@
 /*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:08:28 by jdemers           #+#    #+#             */
-/*   Updated: 2024/09/13 17:19:45 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/18 12:51:10 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
 t_list	*ft_lstlast(t_list *lst)
 {

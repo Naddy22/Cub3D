@@ -16,6 +16,7 @@
 
 # define W_WIDTH 500
 # define W_HEIGHT 200
+# define FOV 66e-2
 
 enum e_wall_side
 {
@@ -63,18 +64,20 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	char	**map;
-	char	*no_texture;
-	char	*so_texture;
-	char	*we_texture;
-	char	*ea_texture;
-	char	*wall_tex[4];
-	char	*f_color;
-	char	*c_color;
+	char		**map;
+	char		*no_texture;
+	char		*so_texture;
+	char		*we_texture;
+	char		*ea_texture;
+	char		*wall_tex[4];
+	char		*f_color;
+	char		*c_color;
+	t_player	perp;
 }	t_game;
 
 // parsing.c
 void	parsing(char *file, t_game *game);
+int		parse_map(int fd, char *map_line, t_game *game);
 
 // error.c
 void	ft_error_exit(char *error);

@@ -6,7 +6,7 @@
 /*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:48:33 by jdemers           #+#    #+#             */
-/*   Updated: 2024/09/13 15:34:14 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/18 13:07:01 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_lstpop(t_list **lst, void (*del)(void *))
 
 	next = (*lst)->next;
 	ft_lstdelone(*lst, del);
-	next->prev = NULL;
+	if (next)
+		next->prev = NULL;
 	*lst = next;
 }

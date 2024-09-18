@@ -24,6 +24,8 @@ SRCS	:=	main.c \
 			free.c \
 			map.c \
 			vect.c
+			utils.c \
+			mlx.c \
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black

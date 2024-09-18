@@ -14,8 +14,8 @@
 # define FAIL 1
 # define ERROR 2
 
-# define W_WIDTH 500
-# define W_HEIGHT 200
+# define W_WIDTH 1920
+# define W_HEIGHT 1080
 # define FOV 66e-2
 
 enum e_wall_side
@@ -24,6 +24,12 @@ enum e_wall_side
 	EAST,
 	NORTH,
 	WEST,
+};
+
+enum	e_color
+{
+	FLOOR,
+	CEILING,
 };
 
 // typedef struct s_map
@@ -65,13 +71,12 @@ typedef struct s_player
 typedef struct s_game
 {
 	char		**map;
-	char		*no_texture;
-	char		*so_texture;
-	char		*we_texture;
-	char		*ea_texture;
 	char		*wall_tex[4];
-	char		*f_color;
-	char		*c_color;
+	char		*color[2];
+	int			f_rgba;
+	int			c_rgba;
+	mlx_t		*mlx_win;
+	mlx_image_t	*background;
 	t_player	perp;
 }	t_game;
 
@@ -81,6 +86,7 @@ int		parse_map(int fd, char *map_line, t_game *game);
 
 // error.c
 void	ft_error_exit(char *error);
+void	ft_free_error(char *error, t_game *game);
 
 // identifiers.c
 int		ft_get_identifiers(t_game *game, char *line);
@@ -88,6 +94,7 @@ bool	ft_is_valid_path(t_game *game);
 
 // color.c
 char	*ft_set_color(char *trim_line, char *line);
+void	convert_color(t_game *game);
 
 // free.c
 void	ft_free_game(t_game *game);
@@ -96,5 +103,11 @@ void	ft_free_all(t_game *game);
 // raycasting.c & camera.c
 t_ray	*init_ray(t_ray *ray, const t_player *perp, double cam_x);
 void	cast_ray(const char **map, t_player *perp, t_ray *ray);
+
+//utils.c
+bool	ft_isspace(char c);
+
+//mlx.c
+void	mlx(t_game *game);
 
 #endif

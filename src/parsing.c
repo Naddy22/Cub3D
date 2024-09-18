@@ -60,4 +60,5 @@ void	parsing(char *file, t_game *game)
 		ft_error_exit("Map file invalid\n");
 	}
 	close(fd);
+	convert_color(game);
 }

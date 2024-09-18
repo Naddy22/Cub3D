@@ -2,12 +2,15 @@
 
 void	ft_free_game(t_game *game)
 {
-	ft_free_verif((void *)&game->so_texture);
-	ft_free_verif((void *)&game->no_texture);
-	ft_free_verif((void *)&game->ea_texture);
-	ft_free_verif((void *)&game->we_texture);
-	ft_free_verif((void *)&game->f_color);
-	ft_free_verif((void *)&game->c_color);
+	int	i;
+
+	i = -1;
+	while (++i < 2)
+		ft_free_verif((void *)&game->color[i]);
+	i = -1;
+	while (++i < 4)
+		ft_free_verif((void *)&game->wall_tex[i]);
+	ft_free_split(game->map);
 }
 
 void	ft_free_all(t_game *game)

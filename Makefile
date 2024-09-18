@@ -23,6 +23,7 @@ SRCS	:=	main.c \
 			color.c \
 			free.c \
 			utils.c \
+			mlx.c \
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black

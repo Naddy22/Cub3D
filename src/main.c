@@ -7,6 +7,7 @@ int main(int argc, char **argv)
 	if (argc == 2)
 	{
 		parsing(argv[1], &game);
+		mlx(&game);
 	}
 	else
 		ft_error_exit("Usage: ./cub3D [file.cub]\n");

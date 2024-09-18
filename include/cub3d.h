@@ -14,13 +14,13 @@
 # define FAIL 1
 # define ERROR 2
 
-# define W_WIDTH 500
-# define W_HEIGHT 200
+# define W_WIDTH 1920
+# define W_HEIGHT 1080
 
 enum e_wall_side
 {
-	SOUTH = -3,
-	WEST = -1,
+	SOUTH,
+	WEST,
 	EAST,
 	NORTH,
 };
@@ -69,11 +69,13 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	char	**map;
-	char	wall_tex[4];
-	char	color[2];
-	int		f_rgba;
-	int		c_rgba;
+	char		**map;
+	char		*wall_tex[4];
+	char		*color[2];
+	int			f_rgba;
+	int			c_rgba;
+	mlx_t		*mlx_win;
+	mlx_image_t	*background;
 }	t_game;
 
 // parsing.c
@@ -101,5 +103,8 @@ void	cast_ray(const char **map, t_player *perp, t_ray *ray);
 
 //utils.c
 bool	ft_isspace(char c);
+
+//mlx.c
+void	mlx(t_game *game);
 
 #endif

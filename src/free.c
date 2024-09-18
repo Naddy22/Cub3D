@@ -2,11 +2,15 @@
 
 void	ft_free_game(t_game *game)
 {
-	int i;
+	int	i;
 
-	
-	ft_free_split(game->wall_tex);
-	ft_free_split(game->color);
+	i = -1;
+	while (++i < 2)
+		ft_free_verif((void *)&game->color[i]);
+	i = -1;
+	while (++i < 4)
+		ft_free_verif((void *)&game->wall_tex[i]);
+	ft_free_split(game->map);
 }
 
 void	ft_free_all(t_game *game)

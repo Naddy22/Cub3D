@@ -30,13 +30,13 @@ static int ft_set_identifier(char **texture, char *id, char *line)
 int	ft_get_identifiers(t_game *game, char *line)
 {
 	if (ft_strnstr(line, "NO", ft_strlen(line)))
-		return (ft_set_identifier(&game->wall_tex[NORTH], "NO ", line));
+		return (ft_set_identifier(&game->tex_path[NORTH], "NO ", line));
 	else if (ft_strnstr(line, "SO", ft_strlen(line)))
-		return (ft_set_identifier(&game->wall_tex[SOUTH], "SO ", line));
+		return (ft_set_identifier(&game->tex_path[SOUTH], "SO ", line));
 	else if (ft_strnstr(line, "WE", ft_strlen(line)))
-		return (ft_set_identifier(&game->wall_tex[WEST], "WE ", line));
+		return (ft_set_identifier(&game->tex_path[WEST], "WE ", line));
 	else if (ft_strnstr(line, "EA", ft_strlen(line)))
-		return (ft_set_identifier(&game->wall_tex[EAST], "EA ", line));
+		return (ft_set_identifier(&game->tex_path[EAST], "EA ", line));
 	else if (ft_strnstr(line, "F", ft_strlen(line)))
 		return (ft_set_identifier(&game->color[FLOOR], "F ", line));
 	else if (ft_strnstr(line, "C", ft_strlen(line)))
@@ -60,13 +60,13 @@ static int ft_open_texture(char *texture)
 
 bool	ft_is_valid_path(t_game *game)
 {
-	if (ft_open_texture(game->wall_tex[NORTH]) != SUCCESS)
+	if (ft_open_texture(game->tex_path[NORTH]) != SUCCESS)
 		return (false);
-	if (ft_open_texture(game->wall_tex[SOUTH]) != SUCCESS)
+	if (ft_open_texture(game->tex_path[SOUTH]) != SUCCESS)
 		return (false);
-	if (ft_open_texture(game->wall_tex[WEST]) != SUCCESS)
+	if (ft_open_texture(game->tex_path[WEST]) != SUCCESS)
 		return (false);
-	if (ft_open_texture(game->wall_tex[EAST]) != SUCCESS)
+	if (ft_open_texture(game->tex_path[EAST]) != SUCCESS)
 		return (false);
 	return (true);
 }

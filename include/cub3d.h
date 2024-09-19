@@ -52,18 +52,25 @@ typedef struct s_ray
 	double	fov_dist;
 }	t_ray;
 
+typedef struct s_parsing
+{
+	char	*tex_paths[4];
+}	t_parsing;
+
 typedef struct s_line
 {
-	int	x;
-	int	h;
-	int	y_0;
-	int	y_end;
+	double	wall_x;
+	int		x;
+	int		h;
+	int		y;
+	int		y_0;
+	int		y_end;
+	int		side;
 }	t_line;
 
 typedef struct s_player
 {
-	double	pos_x;
-	double	pos_y;
+	t_vect	pos;
 	t_vect	dir;
 	t_vect	fov;
 }	t_player;
@@ -77,6 +84,7 @@ typedef struct s_game
 	int			c_rgba;
 	mlx_t		*mlx_win;
 	mlx_image_t	*background;
+	mlx_image_t	*foregr;
 	t_player	perp;
 }	t_game;
 
@@ -100,9 +108,8 @@ void	convert_color(t_game *game);
 void	ft_free_game(t_game *game);
 void	ft_free_all(t_game *game);
 
-// raycasting.c & camera.c
-t_ray	*init_ray(t_ray *ray, const t_player *perp, double cam_x);
-void	cast_ray(const char **map, t_player *perp, t_ray *ray);
+// raycasting.c
+void	draw_walls(void *param);
 
 //utils.c
 bool	ft_isspace(char c);

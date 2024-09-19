@@ -7,8 +7,8 @@ static void	not_free(void *s)
 
 static void	set_start_pos(t_player *perp, int x, int y, char dir_char)
 {
-	perp->pos_x = (double)x;
-	perp->pos_y = (double)y;
+	perp->pos.x = (double)x + 5e-1;
+	perp->pos.y = (double)y + 5e-1;
 	if (dir_char == 'N' || dir_char == 'S')
 	{
 		perp->dir.x = 0e0;
@@ -73,7 +73,7 @@ static int	store_map(t_game *game, t_list *lst, int m)
 		if (x < n)
 			return (FAIL);
 	}
-	if (game->perp.pos_x == 0e0)
+	if (game->perp.pos.x == 0e0)
 		return (FAIL);
 	return (SUCCESS);
 }

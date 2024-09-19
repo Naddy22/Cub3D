@@ -14,8 +14,8 @@ t_ray	*init_ray(t_ray *ray, const t_player *perp, double cam_x)
 {
 	double	ray_dir_len;
 
-	ray->map_x = (int)perp->pos_x;
-	ray->map_y = (int)perp->pos_y;
+	ray->map_x = (int)perp->pos.x;
+	ray->map_y = (int)perp->pos.y;
 	ray->dir = vect_sum(perp->dir, scal_product(cam_x, perp->fov));
 	ray_dir_len = scalar(ray->dir);
 	ray->delta_x = HUGE_VALF;
@@ -24,10 +24,10 @@ t_ray	*init_ray(t_ray *ray, const t_player *perp, double cam_x)
 	ray->delta_y = HUGE_VALF;
 	if (ray->dir.y != 0)
 		ray->delta_y = fabs(ray_dir_len / ray->dir.y);
-	ray->ray_dist_x = (perp->pos_x - ray->map_x) * ray->delta_x;
+	ray->ray_dist_x = (perp->pos.x - ray->map_x) * ray->delta_x;
 	if (ray->dir.x >= 0)
 		ray->ray_dist_x = ray->delta_x - ray->ray_dist_x;
-	ray->ray_dist_y = (perp->pos_y - ray->map_y) * ray->delta_y;
+	ray->ray_dist_y = (perp->pos.y - ray->map_y) * ray->delta_y;
 	if (ray->dir.y >= 0)
 		ray->ray_dist_y = ray->delta_y - ray->ray_dist_y;
 	ray->step_x = (int)copysign(1e0, ray->dir.x);
@@ -35,7 +35,7 @@ t_ray	*init_ray(t_ray *ray, const t_player *perp, double cam_x)
 	return (ray);
 }
 
-void	cast_ray(const char **map, t_player *perp, t_ray *ray)
+void	cast_ray(char **map, t_player *perp, t_ray *ray)
 {
 	double	ray_dist;
 
@@ -53,29 +53,47 @@ void	cast_ray(const char **map, t_player *perp, t_ray *ray)
 			ray->ray_dist_y += ray->delta_y;
 			ray->side = 1;
 		}
-		if (map[ray->map_y][ray->map_x] == '0')
+		if (map[ray->map_y][ray->map_x] == '1')
 			break ;
 	}
-	if (ray->side == 1)
+	if (ray->side == 2)
 		ray_dist = ray->ray_dist_x - ray->delta_x;
 	else
 		ray_dist = ray->ray_dist_y - ray->delta_y;
 	ray->fov_dist = scal_project(ray->dir, perp->dir, ray_dist);
 }
 
-void	perp_scan(t_game *game, t_player *perp)
+static int	get_color(t_game *game, t_line *line)
 {
+	static const int	colors[4] = {0xFF0000FF, 0x00FF00FF, 0x0000FFFF, 0xFFFF00FF};
+
+	if (line->y < line->y_0 || line->y > line->y_end)
+		return (0);
+	return (colors[line->side]);
+}
+
+void	draw_walls(void *param)
+{
+	t_game	*game;
 	t_ray	ray;
 	t_line	line;
 	double	cam_x;
 
+	game = (t_game *)param;
 	line.x = -1;
 	while (++line.x < W_WIDTH)
 	{
 		cam_x = 2 * line.x / (double)W_WIDTH - 1;
-		cast_ray(game->map, perp, init_ray(&ray, perp, cam_x));
+		cast_ray(game->map, &game->perp, init_ray(&ray, &game->perp, cam_x));
 		line.h = (int)(W_HEIGHT / ray.fov_dist);
 		line.y_0 = ft_max(W_HEIGHT / 2 - line.h / 2, 0);
 		line.y_end = W_HEIGHT - line.y_0 - 1;
+		if (ray.side == 1)
+			line.side = 1 + ray.step_y;
+		else
+			line.side = 2 + ray.step_x;
+		line.y = -1;
+		while (++line.y < W_HEIGHT)
+			mlx_put_pixel(game->foregr, line.x, line.y, get_color(game, &line));
 	}
 }

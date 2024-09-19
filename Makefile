@@ -22,8 +22,11 @@ SRCS	:=	main.c \
 			identifiers.c \
 			color.c \
 			free.c \
+			map.c \
+			vect.c \
 			utils.c \
-			mlx.c \
+			raycasting.c \
+			mlx.c
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black
@@ -40,7 +43,6 @@ BOLD=\033[1m
 OBJS	:= $(addprefix $(OBJDIR)/, ${SRCS:.c=.o})
 
 all: $(NAME)
-
 
 $(LIBMLX):
 	@git clone $(GITMLX) $(LIBMLX)

@@ -7,6 +7,9 @@ void	mlx(t_game *game)
 		ft_free_error("MLX init\n", game);
 	draw_floor_and_ceiling(game);
 	set_textures(game);
+	game->foregr = mlx_new_image(game->mlx_win, W_WIDTH, W_HEIGHT);
+	mlx_image_to_window(game->mlx_win, game->foregr, 0, 0);
+	mlx_loop_hook(game->mlx_win, draw_walls, game);
 	mlx_loop(game->mlx_win);
 	mlx_terminate(game->mlx_win);
 }

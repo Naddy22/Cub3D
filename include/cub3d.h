@@ -16,13 +16,14 @@
 
 # define W_WIDTH 1920
 # define W_HEIGHT 1080
+# define FOV 66e-2
 
 enum e_wall_side
 {
-	SOUTH,
-	WEST,
+	SOUTH = 0,
 	EAST,
 	NORTH,
+	WEST,
 };
 
 enum	e_color
@@ -51,18 +52,25 @@ typedef struct s_ray
 	double	fov_dist;
 }	t_ray;
 
+typedef struct s_parsing
+{
+	char	*tex_paths[4];
+}	t_parsing;
+
 typedef struct s_line
 {
-	int	x;
-	int	h;
-	int	y_0;
-	int	y_end;
+	double	wall_x;
+	int		x;
+	int		h;
+	int		y;
+	int		y_0;
+	int		y_end;
+	int		side;
 }	t_line;
 
 typedef struct s_player
 {
-	double	pos_x;
-	double	pos_y;
+	t_vect	pos;
 	t_vect	dir;
 	t_vect	fov;
 }	t_player;
@@ -77,10 +85,13 @@ typedef struct s_game
 	mlx_t			*mlx_win;
 	mlx_texture_t	*wall_tex[4];
 	mlx_image_t		*backgr;
+	mlx_image_t		*foregr;
+	t_player		perp;
 }	t_game;
 
 // parsing.c
 void	parsing(char *file, t_game *game);
+int		parse_map(int fd, char *map_line, t_game *game);
 
 // error.c
 void	ft_error_exit(char *error);
@@ -98,9 +109,8 @@ void	convert_color(t_game *game);
 void	ft_free_game(t_game *game);
 void	ft_free_all(t_game *game);
 
-// raycasting.c & camera.c
-t_ray	*init_ray(t_ray *ray, const t_player *perp, double cam_x);
-void	cast_ray(const char **map, t_player *perp, t_ray *ray);
+// raycasting.c
+void	draw_walls(void *param);
 
 //utils.c
 bool	ft_isspace(char c);

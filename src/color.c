@@ -44,7 +44,7 @@ static bool	ft_color_is_valid(char **split_c)
 				return (false);
 			j++;
 		}
-		if (ft_atol(split_c[i]) < 0 || ft_atol(split_c[i]) > 255)
+		if (ft_atoi(split_c[i]) < 0 || ft_atoi(split_c[i]) > 255)
 			return (false);
 		i++;
 	}

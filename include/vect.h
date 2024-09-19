@@ -7,6 +7,7 @@ typedef struct s_vect
 	double	y;
 }	t_vect;
 
+// retourne la grandeur du vecteur (pythagore)
 double	scalar(t_vect v1);
 t_vect	scal_product(double scal, t_vect v1);
 double	dot_product(t_vect v1, t_vect v2);

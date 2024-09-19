@@ -69,13 +69,14 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	char		**map;
-	char		*wall_tex[4];
-	char		*color[2];
-	int			f_rgba;
-	int			c_rgba;
-	mlx_t		*mlx_win;
-	mlx_image_t	*background;
+	char			**map;
+	char			*tex_path[4];
+	char			*color[2];
+	int				f_rgba;
+	int				c_rgba;
+	mlx_t			*mlx_win;
+	mlx_texture_t	*wall_tex[4];
+	mlx_image_t		*backgr;
 }	t_game;
 
 // parsing.c
@@ -106,5 +107,9 @@ bool	ft_isspace(char c);
 
 //mlx.c
 void	mlx(t_game *game);
+
+//init.c
+void	draw_floor_and_ceiling(t_game *game);
+void	set_textures(t_game *game);
 
 #endif

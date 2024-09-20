@@ -1,5 +1,4 @@
 #include "vect.h"
-#include <math.h>
 
 double	scalar(t_vect v1)
 {

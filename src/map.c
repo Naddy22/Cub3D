@@ -23,8 +23,7 @@ static void	set_start_pos(t_player *perp, int x, int y, char dir_char)
 		if (dir_char == 'W')
 			perp->dir.x *= -1;
 	}
-	perp->fov.x = perp->dir.y * FOV;
-	perp->fov.y = perp->dir.x * FOV;
+	perp->fov = scal_product(FOV, rotate(perp->dir, M_PI_2));
 }
 
 static int	verify_map_tile(t_game *g, int x, int y, int m)

@@ -1,5 +1,6 @@
 #ifndef VECT_H
 # define VECT_H
+# include <math.h>
 
 typedef struct s_vect
 {

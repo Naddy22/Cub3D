@@ -1,29 +1,26 @@
 #include "cub3d.h"
 #include <math.h>
 
-static double	scal_project(t_vect ray_dir, t_vect perp_dir, double ray_dist)
-{
-	double	cos_angle;
+// static double	scal_project(t_vect ray_dir, t_vect perp_dir, double ray_dist)
+// {
+// 	double	cos_angle;
 
-	cos_angle = dot_product(ray_dir, perp_dir);
-	cos_angle /= scalar(ray_dir) * scalar(perp_dir);
-	return (ray_dist * cos_angle);
-}
+// 	cos_angle = dot_product(ray_dir, perp_dir);
+// 	cos_angle /= scalar(ray_dir) * scalar(perp_dir);
+// 	return (ray_dist * cos_angle);
+// }
 
 t_ray	*init_ray(t_ray *ray, const t_player *perp, double cam_x)
 {
-	double	ray_dir_len;
-
 	ray->map_x = (int)perp->pos.x;
 	ray->map_y = (int)perp->pos.y;
 	ray->dir = vect_sum(perp->dir, scal_product(cam_x, perp->fov));
-	ray_dir_len = scalar(ray->dir);
 	ray->delta_x = HUGE_VALF;
 	if (ray->dir.x != 0)
-		ray->delta_x = fabs(ray_dir_len / ray->dir.x);
+		ray->delta_x = fabs(1 / ray->dir.x);
 	ray->delta_y = HUGE_VALF;
 	if (ray->dir.y != 0)
-		ray->delta_y = fabs(ray_dir_len / ray->dir.y);
+		ray->delta_y = fabs(1 / ray->dir.y);
 	ray->ray_dist_x = (perp->pos.x - ray->map_x) * ray->delta_x;
 	if (ray->dir.x >= 0)
 		ray->ray_dist_x = ray->delta_x - ray->ray_dist_x;
@@ -57,19 +54,31 @@ void	cast_ray(char **map, t_player *perp, t_ray *ray)
 			break ;
 	}
 	if (ray->side == 2)
-		ray_dist = ray->ray_dist_x - ray->delta_x;
+		ray->fov_dist = ray->ray_dist_x - ray->delta_x;
 	else
-		ray_dist = ray->ray_dist_y - ray->delta_y;
-	ray->fov_dist = scal_project(ray->dir, perp->dir, ray_dist);
+		ray->fov_dist = ray->ray_dist_y - ray->delta_y;
+	// ray->fov_dist = scal_project(ray->dir, perp->dir, ray_dist);
 }
 
-static int	get_color(t_game *game, t_line *line)
+static uint32_t	get_color(t_game *game, t_line *line)
 {
-	static const int	colors[4] = {0xFF0000FF, 0x00FF00FF, 0x0000FFFF, 0xFFFF00FF};
+	int				tex_x;
+	int				tex_y;
+	int				pix_i;
+	mlx_texture_t	*tex;
+	uint32_t		color;
 
 	if (line->y < line->y_0 || line->y > line->y_end)
 		return (0);
-	return (colors[line->side]);
+	tex = game->wall_tex[line->wall];
+	tex_x = line->wall_x * tex->width;
+	tex_y = (int)((line->y - line->y_0) / line->scale);
+	pix_i = (tex_y * tex->width + tex_x) * tex->bytes_per_pixel;
+	color = tex->pixels[pix_i] << 24;
+	color |= tex->pixels[pix_i + 1] << 16;
+	color |= tex->pixels[pix_i + 2] << 8;
+	color |= tex->pixels[pix_i + 3];
+	return (color);
 }
 
 void	draw_walls(void *param)
@@ -89,9 +98,17 @@ void	draw_walls(void *param)
 		line.y_0 = ft_max(W_HEIGHT / 2 - line.h / 2, 0);
 		line.y_end = W_HEIGHT - line.y_0 - 1;
 		if (ray.side == 1)
-			line.side = 1 + ray.step_y;
+		{
+			line.wall_x = game->perp.pos.x + ray.fov_dist * ray.dir.x;
+			line.wall = 1 + ray.step_y;
+		}
 		else
-			line.side = 2 + ray.step_x;
+		{
+			line.wall_x = game->perp.pos.y + ray.fov_dist * ray.dir.y;
+			line.wall = 2 + ray.step_x;
+		}
+		line.scale = (line.y_end - line.y_0) / (double)game->wall_tex[line.wall]->height;
+		line.wall_x -= floor(line.wall_x);
 		line.y = -1;
 		while (++line.y < W_HEIGHT)
 			mlx_put_pixel(game->foregr, line.x, line.y, get_color(game, &line));

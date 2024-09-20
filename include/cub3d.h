@@ -18,13 +18,13 @@
 # define W_HEIGHT 1080
 # define FOV 66e-2
 
-enum e_wall_side
+typedef enum e_side
 {
 	SOUTH = 0,
 	EAST,
 	NORTH,
 	WEST,
-};
+}	t_side;
 
 enum	e_color
 {
@@ -60,12 +60,13 @@ typedef struct s_parsing
 typedef struct s_line
 {
 	double	wall_x;
+	double	scale;
 	int		x;
 	int		h;
 	int		y;
 	int		y_0;
 	int		y_end;
-	int		side;
+	t_side	wall;
 }	t_line;
 
 typedef struct s_player

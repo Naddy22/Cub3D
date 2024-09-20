@@ -95,7 +95,7 @@ void	draw_walls(void *param)
 		cam_x = 2 * line.x / (double)W_WIDTH - 1;
 		cast_ray(game->map, &game->perp, init_ray(&ray, &game->perp, cam_x));
 		line.h = (int)(W_HEIGHT / ray.fov_dist);
-		line.y_0 = ft_max(W_HEIGHT / 2 - line.h / 2, 0);
+		line.y_0 = W_HEIGHT / 2 - line.h / 2;
 		line.y_end = W_HEIGHT - line.y_0 - 1;
 		if (ray.side == 1)
 		{

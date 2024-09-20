@@ -71,7 +71,6 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 	@rm -rf $(LIBFT)/libft.a
-	@rm -rf $(LIBMLX)/build
 
 ffclean: fclean
 	@rm -rf $(LIBMLX)

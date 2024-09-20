@@ -29,9 +29,10 @@ void	move(t_game *game, t_vect dir, double speed)
 		game->perp.pos.y = new_pos.y;
 }
 
-void	rotate_player(t_game *game)
+void	rotate_player(t_game *game, double speed)
 {
-
+	game->perp.dir = rotate(game->perp.dir, speed);
+	game->perp.fov = rotate(game->perp.fov, speed);
 }
 
 static void	player_key(void *param)
@@ -47,6 +48,10 @@ static void	player_key(void *param)
 		move(game, rotate(game->perp.dir, M_PI_2), SPEED);
 	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_A))
 		move(game, rotate(game->perp.dir, -M_PI_2), SPEED);
+	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_RIGHT))
+		rotate_player(game, ROT_SPEED);
+	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_LEFT))
+		rotate_player(game, -ROT_SPEED);
 	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_ESCAPE))
 	{
 		ft_putstr_fd("Game exited successfully\n", 1);

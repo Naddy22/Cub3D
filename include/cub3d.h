@@ -18,6 +18,7 @@
 # define W_HEIGHT 1080
 # define FOV 66e-2
 # define SPEED 0.1
+# define ROT_SPEED 0.03
 
 typedef enum e_side
 {

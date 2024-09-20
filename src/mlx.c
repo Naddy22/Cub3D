@@ -15,6 +15,11 @@ void	move(t_game *game, t_vect dir, double speed)
 		game->perp.pos.y = new_pos.y;
 }
 
+void	rotate_player(t_game *game)
+{
+	
+}
+
 static void	player_key(void *param)
 {
 	t_game *game;
@@ -24,8 +29,8 @@ static void	player_key(void *param)
 		move(game, game->perp.dir, SPEED);
 	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_S))
 		move(game, game->perp.dir, -SPEED);
-	// else if (mlx_is_key_down(game->mlx_win, MLX_KEY_D))
-
+	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_D))
+		move(game, rotate())
 	// else if (mlx_is_key_down(game->mlx_win, MLX_KEY_A))
 
 	// else if (mlx_is_key_down(game->mlx_win, MLX_KEY_ESCAPE))

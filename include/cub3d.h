@@ -17,7 +17,7 @@
 # define W_WIDTH 1920
 # define W_HEIGHT 1080
 # define FOV 66e-2
-# define SPEED 0.2
+# define SPEED 0.1
 
 enum e_wall_side
 {

@@ -5,24 +5,33 @@ void	move(t_game *game, t_vect dir, double speed)
 	t_vect new_pos;
 
 	new_pos = vect_sum(game->perp.pos, scal_product(speed, dir));
-	if (game->map[(int)new_pos.y][(int)new_pos.x] != '1')
-	{
-		game->perp.pos = new_pos;
-	}
+	// if (game->map[(int)new_pos.y][(int)new_pos.x] != '1')
+	// {
+	// 	game->perp.pos = new_pos;
+	// }
+	if (game->map[(int)game->perp.pos.y][(int)(new_pos.x + (dir.x * 0.1))] != '1')
+		game->perp.pos.x = new_pos.x;
+	if (game->map[(int)(new_pos.y + (dir.y * 0.1))][(int)game->perp.pos.x] != '1')
+		game->perp.pos.y = new_pos.y;
 }
 
-static void	player_key(mlx_key_data_t keydata, void *param)
+static void	player_key(void *param)
 {
 	t_game *game;
 
 	game = param;
-	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
-	{
-		if (keydata.key == MLX_KEY_W)
-			move(game, game->perp.dir, SPEED);
-		else if (keydata.key == MLX_KEY_S)
-			move(game, game->perp.dir, -SPEED);
-	}
+	if (mlx_is_key_down(game->mlx_win, MLX_KEY_W))
+		move(game, game->perp.dir, SPEED);
+	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_S))
+		move(game, game->perp.dir, -SPEED);
+	// else if (mlx_is_key_down(game->mlx_win, MLX_KEY_D))
+
+	// else if (mlx_is_key_down(game->mlx_win, MLX_KEY_A))
+
+	// else if (mlx_is_key_down(game->mlx_win, MLX_KEY_ESCAPE))
+	// {
+		
+	// }
 }
 
 void	mlx(t_game *game)
@@ -35,9 +44,7 @@ void	mlx(t_game *game)
 	game->foregr = mlx_new_image(game->mlx_win, W_WIDTH, W_HEIGHT);
 	mlx_image_to_window(game->mlx_win, game->foregr, 0, 0);
 	mlx_loop_hook(game->mlx_win, draw_walls, game);
-	printf("game->perp.pos.x: %f, game->perp.pos.y: %f\n", game->perp.pos.x, game->perp.pos.y);
-	printf("game->perp.dir.x: %f, game->perp.dir.y: %f\n", game->perp.dir.x, game->perp.dir.y);
-	mlx_key_hook(game->mlx_win, player_key, game);
+	mlx_loop_hook(game->mlx_win, player_key, game);
 	mlx_loop(game->mlx_win);
 	mlx_terminate(game->mlx_win);
 }

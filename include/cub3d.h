@@ -16,6 +16,8 @@
 
 # define W_WIDTH 1920
 # define W_HEIGHT 1080
+# define MM_WIDTH 275
+# define MM_RATIO 666e-4
 # define FOV 8e-1
 # define SPEED 0.1
 # define ROT_SPEED 0.05
@@ -71,6 +73,14 @@ typedef struct s_line
 	t_side	wall;
 }	t_line;
 
+typedef struct s_minimap
+{
+	t_vect	pix_start;
+	t_vect	pix_pos;
+	int		draw_x;
+	int		draw_y;
+}	t_minimap;
+
 typedef struct s_player
 {
 	t_vect	pos;
@@ -81,6 +91,7 @@ typedef struct s_player
 typedef struct s_game
 {
 	char			**map;
+	int				map_height;
 	char			*tex_path[4];
 	char			*color[2];
 	int				f_rgba;
@@ -89,6 +100,7 @@ typedef struct s_game
 	mlx_texture_t	*wall_tex[4];
 	mlx_image_t		*backgr;
 	mlx_image_t		*foregr;
+	mlx_image_t		*minimap[2];
 	t_player		perp;
 }	t_game;
 
@@ -117,6 +129,7 @@ void	draw_walls(void *param);
 
 //utils.c
 bool	ft_isspace(char c);
+char	get_map_tile(char **map, t_vect pos, int m);
 
 //mlx.c
 void	mlx(t_game *game);
@@ -124,5 +137,9 @@ void	mlx(t_game *game);
 //init.c
 void	draw_floor_and_ceiling(t_game *game);
 void	set_textures(t_game *game);
+void	init_minimap(t_game *game);
+
+// minimap.c
+void	draw_minimap(t_player *perp, mlx_image_t *img, char **map, int m);
 
 #endif

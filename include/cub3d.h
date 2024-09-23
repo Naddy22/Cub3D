@@ -141,5 +141,6 @@ void	init_minimap(t_game *game);
 
 // minimap.c
 void	draw_minimap(t_player *perp, mlx_image_t *img, char **map, int m);
+void	draw_minimap_perp(t_player *perp, mlx_image_t *img);
 
 #endif

@@ -1,5 +1,32 @@
 #include "cub3d.h"
 
+static void	draw_dot(mlx_image_t *img, int x, int y)
+{
+	mlx_put_pixel(img, x, y - 2, 0xFF0000FF);
+	mlx_put_pixel(img, x - 1, y - 1, 0xFF0000FF);
+	mlx_put_pixel(img, x, y - 1, 0xFF0000FF);
+	mlx_put_pixel(img, x + 1, y - 1, 0xFF0000FF);
+	mlx_put_pixel(img, x - 2, y, 0xFF0000FF);
+	mlx_put_pixel(img, x - 1, y, 0xFF0000FF);
+	mlx_put_pixel(img, x, y, 0xFF0000FF);
+	mlx_put_pixel(img, x + 1, y, 0xFF0000FF);
+	mlx_put_pixel(img, x + 2, y, 0xFF0000FF);
+	mlx_put_pixel(img, x - 1, y + 1, 0xFF0000FF);
+	mlx_put_pixel(img, x, y + 1, 0xFF0000FF);
+	mlx_put_pixel(img, x + 1, y + 1, 0xFF0000FF);
+	mlx_put_pixel(img, x, y + 2, 0xFF0000FF);
+}
+
+void	draw_minimap_perp(t_player *perp, mlx_image_t *img)
+{
+	int	pix_x;
+	int	pix_y;
+
+	pix_x = MM_WIDTH / 2;
+	pix_y = pix_x;
+	draw_dot(img, pix_x, pix_y);
+}
+
 void	draw_minimap(t_player *perp, mlx_image_t *img, char **map, int m)
 {
 	static double	start_offset = MM_WIDTH * MM_RATIO / 2;

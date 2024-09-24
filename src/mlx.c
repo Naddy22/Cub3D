@@ -37,6 +37,7 @@ void	rotate_player(t_game *game, double speed)
 {
 	game->perp.dir = rotate(game->perp.dir, speed);
 	game->perp.fov = rotate(game->perp.fov, speed);
+	draw_minimap_perp(&game->perp, game->minimap[1]);
 }
 
 static void	player_key(void *param)

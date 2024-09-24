@@ -59,7 +59,7 @@ $(OBJDIR):
 	@mkdir $(OBJDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@cc $(CLFAGS) -o $@ -c $< $(HEADERS) \
+	@cc $(CFLAGS) -o $@ -c $< $(HEADERS) \
 		&& printf "$(GREEN)$(BOLD)Compiling:$(WHITE) $(notdir $<)\n"
 
 $(NAME): $(LIBMLX)/build $(LIBFT)/libft.a $(OBJDIR) $(OBJS)

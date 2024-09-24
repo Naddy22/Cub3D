@@ -19,11 +19,22 @@ static void	draw_dot(mlx_image_t *img, int x, int y)
 
 void	draw_minimap_perp(t_player *perp, mlx_image_t *img)
 {
-	int	pix_x;
-	int	pix_y;
+	// int		y_origin;
+	int		pix_x;
+	int		pix_y;
 
 	pix_x = MM_WIDTH / 2;
 	pix_y = pix_x;
+	(void)perp;
+	// if (!perp->dir.x)
+	// 	vertical_dir(perp, img);
+	// else
+	// {
+	// 	y_origin = MM_WIDTH * (perp->dir.x - perp->dir.y) / (2 * perp->dir.x);
+	// 	draw_dir(perp, slope, y_origin)
+	// }
+	// pix_x = MM_WIDTH / 2;
+	// pix_y = pix_x;
 	draw_dot(img, pix_x, pix_y);
 }
 

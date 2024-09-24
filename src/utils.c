@@ -15,7 +15,7 @@ char	get_map_tile(char **map, t_vect pos, int m)
 
 	x = (int)pos.x;
 	y = (int)pos.y;
-	if (y < 0 || y >= m || x < 0 || x >= ft_strlen(map[y]))
+	if (y < 0 || y >= m || x < 0 || x >= (int)ft_strlen(map[y]))
 		return (' ');
 	return (map[y][x]);
 }

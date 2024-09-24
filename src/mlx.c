@@ -10,6 +10,8 @@ static void	exit_mlx(t_game *game)
 		mlx_delete_texture(game->wall_tex[i]);
 	mlx_delete_image(game->mlx_win, game->backgr);
 	mlx_delete_image(game->mlx_win, game->foregr);
+	mlx_delete_image(game->mlx_win, game->minimap[0]);
+	mlx_delete_image(game->mlx_win, game->minimap[1]);
 	mlx_terminate(game->mlx_win);
 	exit(EXIT_SUCCESS);
 }

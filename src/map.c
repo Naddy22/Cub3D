@@ -36,9 +36,9 @@ static int	verify_map_tile(t_game *g, int x, int y, int m)
 		return (FAIL);
 	if (!g->map[y][x + 1] || g->map[y][x + 1] == ' ')
 		return (FAIL);
-	if (y == 0 || ft_strlen(g->map[y - 1]) <= x || g->map[y - 1][x] == ' ')
+	if (y == 0 || (int)ft_strlen(g->map[y - 1]) <= x || g->map[y - 1][x] == ' ')
 		return (FAIL);
-	if (y >= m || ft_strlen(g->map[y + 1]) <= x || g->map[y + 1][x] == ' ')
+	if (y >= m || (int)ft_strlen(g->map[y + 1]) <= x || g->map[y + 1][x] == ' ')
 		return (FAIL);
 	if (g->map[y][x] == '0')
 		return (SUCCESS);

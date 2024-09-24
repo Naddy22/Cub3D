@@ -32,10 +32,8 @@ t_ray	*init_ray(t_ray *ray, const t_player *perp, double cam_x)
 	return (ray);
 }
 
-void	cast_ray(char **map, t_player *perp, t_ray *ray)
+void	cast_ray(char **map, t_ray *ray)
 {
-	double	ray_dist;
-
 	while (true)
 	{
 		if (ray->ray_dist_x < ray->ray_dist_y)
@@ -93,7 +91,7 @@ void	draw_walls(void *param)
 	while (++line.x < W_WIDTH)
 	{
 		cam_x = 2 * line.x / (double)W_WIDTH - 1;
-		cast_ray(game->map, &game->perp, init_ray(&ray, &game->perp, cam_x));
+		cast_ray(game->map, init_ray(&ray, &game->perp, cam_x));
 		line.h = (int)(W_HEIGHT / ray.fov_dist);
 		line.y_0 = W_HEIGHT / 2 - line.h / 2;
 		line.y_end = W_HEIGHT - line.y_0 - 1;

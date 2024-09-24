@@ -79,14 +79,12 @@ static uint32_t	get_color(t_game *game, t_line *line)
 	return (color);
 }
 
-void	draw_walls(void *param)
+void	draw_walls(t_game *game)
 {
-	t_game	*game;
 	t_ray	ray;
 	t_line	line;
 	double	cam_x;
 
-	game = (t_game *)param;
 	line.x = -1;
 	while (++line.x < W_WIDTH)
 	{

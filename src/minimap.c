@@ -33,7 +33,7 @@ static void	draw_x_dir(t_player *perp, mlx_image_t *img)
 	if (perp->dir.x < 0)
 		step = -1;
 	x = MM_WIDTH / 2;
-	stop = x + 20 * step;
+	stop = x + 20 * perp->dir.x;
 	while (x != stop)
 	{
 		y = perp->dir.y * x / perp->dir.x + origin;
@@ -56,7 +56,7 @@ static void	draw_y_dir(t_player *perp, mlx_image_t *img)
 	if (perp->dir.y < 0)
 		step = -1;
 	y = MM_WIDTH / 2;
-	stop = y + 20 * step;
+	stop = y + 20 * perp->dir.y;
 	while (y != stop)
 	{
 		x = perp->dir.x * y / perp->dir.y + origin;

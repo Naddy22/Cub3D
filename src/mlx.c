@@ -9,6 +9,8 @@ static void	exit_mlx(t_game *game)
 		mlx_delete_texture(game->wall_tex[i]);
 	mlx_delete_image(game->mlx_win, game->backgr);
 	mlx_delete_image(game->mlx_win, game->foregr);
+	mlx_delete_image(game->mlx_win, game->minimap[0]);
+	mlx_delete_image(game->mlx_win, game->minimap[1]);
 	mlx_terminate(game->mlx_win);
 }
 
@@ -19,8 +21,10 @@ void	move(t_game *game, t_vect dir, double speed)
 
 	new_pos = vect_sum(game->perp.pos, scal_product(speed, dir));
 	hitbox = vect_sum(game->perp.pos, scal_product(speed * 1.1, dir));
-	if (game->map[(int)hitbox.y][(int)hitbox.x] != '1')
-		game->perp.pos = new_pos;
+	if (game->map[(int)hitbox.y][(int)hitbox.x] == '1')
+		return ;
+	game->perp.pos = new_pos;
+	draw_minimap(&game->perp, game->minimap[0], game->map, game->map_height);
 }
 
 void	rotate_player(t_game *game, double speed)
@@ -59,6 +63,7 @@ void	mlx(t_game *game)
 	set_textures(game);
 	game->foregr = mlx_new_image(game->mlx_win, W_WIDTH, W_HEIGHT);
 	mlx_image_to_window(game->mlx_win, game->foregr, 0, 0);
+	init_minimap(game);
 	mlx_loop_hook(game->mlx_win, draw_walls, game);
 	mlx_loop_hook(game->mlx_win, player_key, game);
 	mlx_loop(game->mlx_win);

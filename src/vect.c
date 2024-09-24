@@ -2,7 +2,7 @@
 
 double	scalar(t_vect v1)
 {
-	return (sqrt(v1.x * v1.x + v1.y * v1.y));
+	return (hypot(v1.x, v1.y));
 }
 
 t_vect	scal_product(double scal, t_vect v1)

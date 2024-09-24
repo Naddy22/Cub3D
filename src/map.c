@@ -36,9 +36,9 @@ static int	verify_map_tile(t_game *g, int x, int y, int m)
 		return (FAIL);
 	if (!g->map[y][x + 1] || g->map[y][x + 1] == ' ')
 		return (FAIL);
-	if (y == 0 || ft_strlen(g->map[y - 1]) <= x || g->map[y - 1][x] == ' ')
+	if (y == 0 || (int)ft_strlen(g->map[y - 1]) <= x || g->map[y - 1][x] == ' ')
 		return (FAIL);
-	if (y >= m || ft_strlen(g->map[y + 1]) <= x || g->map[y + 1][x] == ' ')
+	if (y >= m || (int)ft_strlen(g->map[y + 1]) <= x || g->map[y + 1][x] == ' ')
 		return (FAIL);
 	if (g->map[y][x] == '0')
 		return (SUCCESS);
@@ -49,25 +49,25 @@ static int	verify_map_tile(t_game *g, int x, int y, int m)
 	return (SUCCESS);
 }
 
-static int	store_map(t_game *game, t_list *lst, int m)
+static int	store_map(t_game *game, t_list *lst)
 {
 	int		x;
 	int		y;
 	int		n;
 
-	y = m;
+	y = game->map_height;
 	while (--y >= 0)
 	{
 		game->map[y] = lst->data;
 		ft_lstpop(&lst, not_free);
 	}
-	while (++y < m)
+	while (++y < game->map_height)
 	{
 		x = 0;
 		n = ft_strlen(game->map[y]);
 		if (game->map[y][n - 1] == '\n')
 			game->map[y][--n] = '\0';
-		while (x < n && verify_map_tile(game, x, y, m) == SUCCESS)
+		while (x < n && verify_map_tile(game, x, y, game->map_height) == 0)
 			x++;
 		if (x < n)
 			return (FAIL);
@@ -96,5 +96,6 @@ int	parse_map(int fd, char *map_line, t_game *game)
 	game->map = ft_calloc(ft_lstsize(lst) + 1, sizeof(char *));
 	if (!game->map)
 		return (ft_lstclear(&lst, free), FAIL);
-	return (store_map(game, lst, ft_lstsize(lst)));
+	game->map_height = ft_lstsize(lst);
+	return (store_map(game, lst));
 }

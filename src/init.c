@@ -36,3 +36,13 @@ void	set_textures(t_game *game)
 		directions++;
 	}
 }
+
+void	init_minimap(t_game *game)
+{
+	game->minimap[0] = mlx_new_image(game->mlx_win, MM_WIDTH, MM_WIDTH);
+	game->minimap[1] = mlx_new_image(game->mlx_win, MM_WIDTH, MM_WIDTH);
+	mlx_image_to_window(game->mlx_win, game->minimap[0], 0, 0);
+	mlx_image_to_window(game->mlx_win, game->minimap[1], 0, 0);
+	draw_minimap(&game->perp, game->minimap[0], game->map, game->map_height);
+	draw_minimap_perp(&game->perp, game->minimap[1]);
+}

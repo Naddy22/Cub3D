@@ -26,7 +26,8 @@ SRCS	:=	main.c \
 			vect.c \
 			utils.c \
 			raycasting.c \
-			mlx.c
+			mlx.c \
+			minimap.c
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black

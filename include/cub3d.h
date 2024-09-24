@@ -110,7 +110,6 @@ void	convert_color(t_game *game);
 
 // free.c
 void	ft_free_game(t_game *game);
-void	ft_free_all(t_game *game);
 
 // raycasting.c
 void	draw_walls(void *param);

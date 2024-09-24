@@ -4,14 +4,12 @@ static void	exit_mlx(t_game *game)
 {
 	int i;
 
-	ft_free_all(game);
 	i = -1;
 	while (++i < 4)
 		mlx_delete_texture(game->wall_tex[i]);
 	mlx_delete_image(game->mlx_win, game->backgr);
 	mlx_delete_image(game->mlx_win, game->foregr);
 	mlx_terminate(game->mlx_win);
-	exit(EXIT_SUCCESS);
 }
 
 void	move(t_game *game, t_vect dir, double speed)
@@ -49,10 +47,7 @@ static void	player_key(void *param)
 	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_LEFT))
 		rotate_player(game, -ROT_SPEED);
 	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_ESCAPE))
-	{
-		ft_putstr_fd("Game exited successfully\n", 1);
-		exit_mlx(game);
-	}
+		mlx_close_window(game->mlx_win);
 }
 
 void	mlx(t_game *game)

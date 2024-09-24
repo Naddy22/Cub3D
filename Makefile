@@ -1,5 +1,5 @@
 NAME 	:= cub3D
-CFLAGS	:= -Wextra -Werror -Wall
+CFLAGS	:= -Wextra -Werror -Wall -g
 
 GITMLX	:= https://github.com/codam-coding-college/MLX42.git
 LIBMLX 	:= ./lib/MLX42
@@ -58,7 +58,7 @@ $(OBJDIR):
 	@mkdir $(OBJDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@cc $(CLFAGS) -o $@ -c $< $(HEADERS) \
+	@cc $(CFLAGS) -o $@ -c $< $(HEADERS) \
 		&& printf "$(GREEN)$(BOLD)Compiling:$(WHITE) $(notdir $<)\n"
 
 $(NAME): $(LIBMLX)/build $(LIBFT)/libft.a $(OBJDIR) $(OBJS)

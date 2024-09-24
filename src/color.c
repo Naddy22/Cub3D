@@ -73,7 +73,7 @@ static char	**get_split(char *str_color)
 
 	i = 0;
 	j = 0;
-	tmp = ft_calloc(6, sizeof(char));
+	tmp = ft_calloc((ft_strlen(str_color)) + 1, sizeof(char));
 	if (!tmp)
 		return (NULL);
 	while (str_color[i] != '\0')
@@ -85,7 +85,6 @@ static char	**get_split(char *str_color)
 		}
 		i++;
 	}
-	tmp[j] = '\0';
 	result = ft_split(tmp, ',');
 	free (tmp);
 	return (result);

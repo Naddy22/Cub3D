@@ -117,6 +117,7 @@ void	draw_walls(void *param);
 
 //utils.c
 bool	ft_isspace(char c);
+bool	is_line_empty(char *line);
 
 //mlx.c
 void	mlx(t_game *game);

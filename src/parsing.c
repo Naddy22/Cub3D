@@ -25,6 +25,8 @@ static char *ft_get_infos(t_game *game, int fd, int *id_count)
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
+		if (is_line_empty(line) == true)
+			continue ;
 		if (ft_strncmp(line, "\n", 1) != 0)
 		{
 			result = ft_get_identifiers(game, line);

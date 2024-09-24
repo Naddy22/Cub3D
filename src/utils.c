@@ -7,3 +7,14 @@ bool	ft_isspace(char c)
 		return (true);
 	return (false);
 }
+
+bool	is_line_empty(char *line)
+{
+	while (*line)
+	{
+		if (ft_isspace(*line) == false)
+			return (false);
+		line++;
+	}
+	return (true);
+}

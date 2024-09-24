@@ -15,7 +15,7 @@ static int ft_set_identifier(char **texture, char *id, char *line)
 		*texture = ft_set_color(trim, line);
 	else if (ft_strncmp(trim, id, 3) == 0)
 	{
-		*texture = ft_strdup(trim + 3);
+		*texture = ft_strtrim(trim + 3, " ");
 		if (*texture == NULL)
 		{
 			free(trim);
@@ -41,8 +41,7 @@ int	ft_get_identifiers(t_game *game, char *line)
 		return (ft_set_identifier(&game->color[FLOOR], "F ", line));
 	else if (ft_strnstr(line, "C", ft_strlen(line)))
 		return (ft_set_identifier(&game->color[CEILING], "C ", line));
-	else
-		return (-1);
+	return (-1);
 }
 
 static int ft_open_texture(char *texture)

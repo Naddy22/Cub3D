@@ -32,6 +32,7 @@ static bool	ft_color_is_valid(char **split_c)
 	int i;
 	int j;
 
+
 	if (!split_c[0] || !split_c[1] || !split_c[2])
 		return (false);
 	i = 0;
@@ -63,14 +64,41 @@ static void	get_rgb(unsigned int *rgb, char **split)
 	}
 }
 
+static char	**get_split(char *str_color)
+{
+	char *tmp;
+	char **result;
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	tmp = ft_calloc(6, sizeof(char));
+	if (!tmp)
+		return (NULL);
+	while (str_color[i] != '\0')
+	{
+		if (str_color[i] != ' ')
+		{
+			tmp[j] = str_color[i];
+			j++;
+		}
+		i++;
+	}
+	tmp[j] = '\0';
+	result = ft_split(tmp, ',');
+	free (tmp);
+	return (result);
+}
+
 void	convert_color(t_game *game)
 {
 	char			**floor;
 	char			**ceiling;
 	unsigned int	rgb[3];
 
-	floor = ft_split(game->color[FLOOR], ',');
-	ceiling = ft_split(game->color[CEILING], ',');
+	floor = get_split(game->color[FLOOR]);
+	ceiling = get_split(game->color[CEILING]);
 	if (!floor || !ceiling)
 	{
 		free(floor);

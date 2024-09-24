@@ -21,10 +21,6 @@ void	move(t_game *game, t_vect dir, double speed)
 
 	new_pos = vect_sum(game->perp.pos, scal_product(speed, dir));
 	hitbox = vect_sum(game->perp.pos, scal_product(speed * 1.1, dir));
-	// if (game->map[(int)game->perp.pos.y][(int)(new_pos.x + (dir.x * 0.1))] != '1')
-	// 	game->perp.pos.x = new_pos.x;
-	// if (game->map[(int)(new_pos.y + (dir.y * 0.1))][(int)game->perp.pos.x] != '1')
-	// 	game->perp.pos.y = new_pos.y;
 	if (game->map[(int)hitbox.y][(int)hitbox.x] != '1')
 		game->perp.pos = new_pos;
 }

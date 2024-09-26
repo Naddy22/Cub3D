@@ -6,7 +6,7 @@
 /*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:33:52 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 10:33:53 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:42:01 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define MM_RATIO 666e-4
 # define FOV 8e-1
 # define SPEED 0.1
+# define MOUSE_SPEED 0.003
 # define ROT_SPEED 0.05
 # define FPS 60
 

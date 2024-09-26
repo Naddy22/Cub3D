@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:34:59 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 15:55:46 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/26 16:21:52 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
 int	mouse_move(t_game *game)
 {
 	static int	x = -1;
 	int			diff;
-	int new_pos;
+	int			new_pos;
 
 	if (x == -1)
 	{
@@ -28,20 +27,6 @@ int	mouse_move(t_game *game)
 	diff = x - new_pos;
 	x = new_pos;
 	return (diff);
-}
-
-void	exit_mlx(t_game *game)
-{
-	int	i;
-
-	i = -1;
-	while (++i < 4)
-		mlx_delete_texture(game->wall_tex[i]);
-	mlx_delete_image(game->mlx_win, game->backgr);
-	mlx_delete_image(game->mlx_win, game->foregr);
-	mlx_delete_image(game->mlx_win, game->minimap[0]);
-	mlx_delete_image(game->mlx_win, game->minimap[1]);
-	mlx_terminate(game->mlx_win);
 }
 
 void	move(t_game *game, t_vect dir, double speed)
@@ -73,7 +58,8 @@ void	player_key(void *param)
 
 	game = param;
 	speed_norm = FPS * game->mlx_win->delta_time;
-	rotate_player(game, mouse_move(game) * (-MOUSE_SPEED));
+	if (game->mouse_key == true)
+		rotate_player(game, mouse_move(game) * (-MOUSE_SPEED));
 	if (mlx_is_key_down(game->mlx_win, MLX_KEY_W))
 		move(game, game->perp.dir, SPEED * speed_norm);
 	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_S))
@@ -86,6 +72,29 @@ void	player_key(void *param)
 		rotate_player(game, ROT_SPEED * speed_norm);
 	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_LEFT))
 		rotate_player(game, -ROT_SPEED * speed_norm);
-	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_ESCAPE))
-		mlx_close_window(game->mlx_win);
+}
+
+void	general_key(mlx_key_data_t keydata, void *param)
+{
+	t_game	*game;
+
+	game = param;
+	if (keydata.action == MLX_PRESS)
+	{
+		if (keydata.key == MLX_KEY_ESCAPE)
+			mlx_close_window(game->mlx_win);
+		if (keydata.key == MLX_KEY_M)
+		{
+			if (game->mouse_key == false)
+			{
+				mlx_set_cursor_mode(game->mlx_win, MLX_MOUSE_DISABLED);
+				game->mouse_key = true;
+			}
+			else
+			{
+				mlx_set_cursor_mode(game->mlx_win, MLX_MOUSE_NORMAL);
+				game->mouse_key = false;
+			}
+		}
+	}
 }

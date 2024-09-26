@@ -1,41 +1,78 @@
 #include "cub3d.h"
 
-static void	draw_dot(mlx_image_t *img, int x, int y)
+static void	draw_dot(mlx_image_t *img)
 {
-	mlx_put_pixel(img, x, y - 2, 0xFF0000FF);
-	mlx_put_pixel(img, x - 1, y - 1, 0xFF0000FF);
-	mlx_put_pixel(img, x, y - 1, 0xFF0000FF);
-	mlx_put_pixel(img, x + 1, y - 1, 0xFF0000FF);
-	mlx_put_pixel(img, x - 2, y, 0xFF0000FF);
-	mlx_put_pixel(img, x - 1, y, 0xFF0000FF);
-	mlx_put_pixel(img, x, y, 0xFF0000FF);
-	mlx_put_pixel(img, x + 1, y, 0xFF0000FF);
-	mlx_put_pixel(img, x + 2, y, 0xFF0000FF);
-	mlx_put_pixel(img, x - 1, y + 1, 0xFF0000FF);
-	mlx_put_pixel(img, x, y + 1, 0xFF0000FF);
-	mlx_put_pixel(img, x + 1, y + 1, 0xFF0000FF);
-	mlx_put_pixel(img, x, y + 2, 0xFF0000FF);
+	static const int	center = MM_WIDTH / 2;
+
+	mlx_put_pixel(img, center, center - 2, 0xFF0000FF);
+	mlx_put_pixel(img, center - 1, center - 1, 0xFF0000FF);
+	mlx_put_pixel(img, center, center - 1, 0xFF0000FF);
+	mlx_put_pixel(img, center + 1, center - 1, 0xFF0000FF);
+	mlx_put_pixel(img, center - 2, center, 0xFF0000FF);
+	mlx_put_pixel(img, center - 1, center, 0xFF0000FF);
+	mlx_put_pixel(img, center, center, 0xFF0000FF);
+	mlx_put_pixel(img, center + 1, center, 0xFF0000FF);
+	mlx_put_pixel(img, center + 2, center, 0xFF0000FF);
+	mlx_put_pixel(img, center - 1, center + 1, 0xFF0000FF);
+	mlx_put_pixel(img, center, center + 1, 0xFF0000FF);
+	mlx_put_pixel(img, center + 1, center + 1, 0xFF0000FF);
+	mlx_put_pixel(img, center, center + 2, 0xFF0000FF);
+}
+
+static void	draw_x_dir(t_player *perp, mlx_image_t *img)
+{
+	int	origin;
+	int	x;
+	int	y;
+	int	step;
+	int	stop;
+
+	// printf("draw_x_dir: dir=(%f ; %f)\n", perp->dir.x, perp->dir.y);
+	origin = MM_WIDTH * (perp->dir.x - perp->dir.y) / (2 * perp->dir.x);
+	step = 1;
+	if (perp->dir.x < 0)
+		step = -1;
+	x = MM_WIDTH / 2;
+	stop = x + 20 * perp->dir.x;
+	while (x != stop)
+	{
+		y = perp->dir.y * x / perp->dir.x + origin;
+		mlx_put_pixel(img, x, y, 0x0000FFFF);
+		x += step;
+	}
+}
+
+static void	draw_y_dir(t_player *perp, mlx_image_t *img)
+{
+	int	origin;
+	int	x;
+	int	y;
+	int	step;
+	int	stop;
+
+	// printf("draw_y_dir: dir=(%f ; %f)\n", perp->dir.x, perp->dir.y);
+	origin = MM_WIDTH * (perp->dir.y - perp->dir.x) / (2 * perp->dir.y);
+	step = 1;
+	if (perp->dir.y < 0)
+		step = -1;
+	y = MM_WIDTH / 2;
+	stop = y + 20 * perp->dir.y;
+	while (y != stop)
+	{
+		x = perp->dir.x * y / perp->dir.y + origin;
+		mlx_put_pixel(img, x, y, 0x0000FFFF);
+		y += step;
+	}
 }
 
 void	draw_minimap_perp(t_player *perp, mlx_image_t *img)
 {
-	// int		y_origin;
-	int		pix_x;
-	int		pix_y;
-
-	pix_x = MM_WIDTH / 2;
-	pix_y = pix_x;
-	(void)perp;
-	// if (!perp->dir.x)
-	// 	vertical_dir(perp, img);
-	// else
-	// {
-	// 	y_origin = MM_WIDTH * (perp->dir.x - perp->dir.y) / (2 * perp->dir.x);
-	// 	draw_dir(perp, slope, y_origin)
-	// }
-	// pix_x = MM_WIDTH / 2;
-	// pix_y = pix_x;
-	draw_dot(img, pix_x, pix_y);
+	ft_bzero(img->pixels, MM_WIDTH * MM_WIDTH * sizeof(u_int8_t) * 4);
+	if (fabs(perp->dir.x) >= fabs(perp->dir.y))
+		draw_x_dir(perp, img);
+	else
+		draw_y_dir(perp, img);
+	draw_dot(img);
 }
 
 void	draw_minimap(t_player *perp, mlx_image_t *img, char **map, int m)

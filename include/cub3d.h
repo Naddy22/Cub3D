@@ -21,6 +21,7 @@
 # define FOV 8e-1
 # define SPEED 0.1
 # define ROT_SPEED 0.05
+# define FPS 60
 
 typedef enum e_side
 {
@@ -124,7 +125,7 @@ void	convert_color(t_game *game);
 void	ft_free_game(t_game *game);
 
 // raycasting.c
-void	draw_walls(void *param);
+void	draw_walls(t_game *game);
 
 //utils.c
 bool	ft_isspace(char c);

@@ -6,7 +6,7 @@
 /*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:34:22 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 10:44:37 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:19:52 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_set_color(char *trim_line, char *line)
 		free(line);
 		ft_error_exit("Invalid color format\n");
 	}
-	result = ft_strdup(trim_line + 2);
+	result = ft_strtrim(trim_line + 1, " \t\n\v\f\r");
 	if (result == NULL)
 	{
 		free(trim_line);

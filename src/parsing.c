@@ -6,7 +6,7 @@
 /*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:35:03 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 10:51:42 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:56:10 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*ft_get_infos(t_game *game, int fd, int *id_count)
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		if (ft_strncmp(line, "\n", 1) != 0 || !is_line_empty(line))
+		if (ft_strncmp(line, "\n", 1) != 0 && !is_line_empty(line))
 		{
 			result = ft_get_identifiers(game, line);
 			if (result == -1)

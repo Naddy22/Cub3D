@@ -3,24 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:35:09 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 10:35:10 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:19:28 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <math.h>
-
-// static double	scal_project(t_vect ray_dir, t_vect perp_dir, double ray_dist)
-// {
-// 	double	cos_angle;
-
-// 	cos_angle = dot_product(ray_dir, perp_dir);
-// 	cos_angle /= scalar(ray_dir) * scalar(perp_dir);
-// 	return (ray_dist * cos_angle);
-// }
 
 t_ray	*init_ray(t_ray *ray, const t_player *perp, double cam_x)
 {
@@ -44,7 +35,7 @@ t_ray	*init_ray(t_ray *ray, const t_player *perp, double cam_x)
 	return (ray);
 }
 
-void	cast_ray(char **map, t_ray *ray)
+void	cast_ray(char **map, t_ray *ray, int map_m)
 {
 	while (true)
 	{
@@ -60,14 +51,32 @@ void	cast_ray(char **map, t_ray *ray)
 			ray->ray_dist_y += ray->delta_y;
 			ray->side = 1;
 		}
-		if (map[ray->map_y][ray->map_x] == '1')
+		if (get_map_tile(map, ray->map_x, ray->map_y, map_m) != '0')
 			break ;
 	}
 	if (ray->side == 2)
 		ray->fov_dist = ray->ray_dist_x - ray->delta_x;
 	else
 		ray->fov_dist = ray->ray_dist_y - ray->delta_y;
-	// ray->fov_dist = scal_project(ray->dir, perp->dir, ray_dist);
+}
+
+static void	init_line(t_line *line, t_ray *ray, t_game *game)
+{
+	line->h = (int)(W_HEIGHT / ray->fov_dist);
+	line->y_0 = W_HEIGHT / 2 - line->h / 2;
+	line->y_end = W_HEIGHT - line->y_0 - 1;
+	if (ray->side == 1)
+	{
+		line->wall_x = game->perp.pos.x + ray->fov_dist * ray->dir.x;
+		line->wall = 1 + ray->step_y;
+	}
+	else
+	{
+		line->wall_x = game->perp.pos.y + ray->fov_dist * ray->dir.y;
+		line->wall = 2 + ray->step_x;
+	}
+	line->scale = line->h / (double)game->wall_tex[line->wall]->height;
+	line->wall_x -= floor(line->wall_x);
 }
 
 static uint32_t	get_color(t_game *game, t_line *line)
@@ -101,22 +110,8 @@ void	draw_walls(t_game *game)
 	while (++line.x < W_WIDTH)
 	{
 		cam_x = 2 * line.x / (double)W_WIDTH - 1;
-		cast_ray(game->map, init_ray(&ray, &game->perp, cam_x));
-		line.h = (int)(W_HEIGHT / ray.fov_dist);
-		line.y_0 = W_HEIGHT / 2 - line.h / 2;
-		line.y_end = W_HEIGHT - line.y_0 - 1;
-		if (ray.side == 1)
-		{
-			line.wall_x = game->perp.pos.x + ray.fov_dist * ray.dir.x;
-			line.wall = 1 + ray.step_y;
-		}
-		else
-		{
-			line.wall_x = game->perp.pos.y + ray.fov_dist * ray.dir.y;
-			line.wall = 2 + ray.step_x;
-		}
-		line.scale = (line.y_end - line.y_0) / (double)game->wall_tex[line.wall]->height;
-		line.wall_x -= floor(line.wall_x);
+		cast_ray(game->map, init_ray(&ray, &game->perp, cam_x), game->map_h);
+		init_line(&line, &ray, game);
 		line.y = -1;
 		while (++line.y < W_HEIGHT)
 			mlx_put_pixel(game->foregr, line.x, line.y, get_color(game, &line));

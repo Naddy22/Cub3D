@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:34:51 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 10:34:52 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:31:17 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int	verify_map_tile(t_game *g, int x, int y, int m)
 		return (FAIL);
 	start_pos = true;
 	set_start_pos(&g->perp, x, y, g->map[y][x]);
+	g->map[y][x] = '0';
 	return (SUCCESS);
 }
 
@@ -67,19 +68,19 @@ static int	store_map(t_game *game, t_list *lst)
 	int		y;
 	int		n;
 
-	y = game->map_height;
+	y = game->map_h;
 	while (--y >= 0)
 	{
 		game->map[y] = lst->data;
 		ft_lstpop(&lst, not_free);
 	}
-	while (++y < game->map_height)
+	while (++y < game->map_h)
 	{
 		x = 0;
 		n = ft_strlen(game->map[y]);
 		if (game->map[y][n - 1] == '\n')
 			game->map[y][--n] = '\0';
-		while (x < n && verify_map_tile(game, x, y, game->map_height) == 0)
+		while (x < n && verify_map_tile(game, x, y, game->map_h) == 0)
 			x++;
 		if (x < n)
 			return (FAIL);
@@ -108,6 +109,6 @@ int	parse_map(int fd, char *map_line, t_game *game)
 	game->map = ft_calloc(ft_lstsize(lst) + 1, sizeof(char *));
 	if (!game->map)
 		return (ft_lstclear(&lst, free), FAIL);
-	game->map_height = ft_lstsize(lst);
+	game->map_h = ft_lstsize(lst);
 	return (store_map(game, lst));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:34:59 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 11:42:08 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:51:25 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	mouse_move(t_game *game)
 	return (diff);
 }
 
-static void	exit_mlx(t_game *game)
+void	exit_mlx(t_game *game)
 {
 	int	i;
 
@@ -51,11 +51,11 @@ void	move(t_game *game, t_vect dir, double speed)
 
 	new_pos = vect_sum(game->perp.pos, scal_product(speed, dir));
 	hitbox = vect_sum(game->perp.pos, scal_product(speed * 1.1, dir));
-	if (game->map[(int)hitbox.y][(int)hitbox.x] == '1')
+	if (get_map_tile(game->map, (int)hitbox.x, (int)hitbox.y, game->map_h) != '0')
 		return ;
 	game->perp.pos = new_pos;
 	draw_walls(game);
-	draw_minimap(&game->perp, game->minimap[0], game->map, game->map_height);
+	draw_minimap(&game->perp, game->minimap[0], game->map, game->map_h);
 }
 
 void	rotate_player(t_game *game, double speed)
@@ -66,7 +66,7 @@ void	rotate_player(t_game *game, double speed)
 	draw_minimap_perp(&game->perp, game->minimap[1]);
 }
 
-static void	player_key(void *param)
+void	player_key(void *param)
 {
 	t_game	*game;
 	double	speed_norm;
@@ -88,22 +88,4 @@ static void	player_key(void *param)
 		rotate_player(game, -ROT_SPEED * speed_norm);
 	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_ESCAPE))
 		mlx_close_window(game->mlx_win);
-}
-
-// mlx_loop_hook(game->mlx_win, draw_walls, game);
-void	mlx(t_game *game)
-{
-	game->mlx_win = mlx_init(W_WIDTH, W_HEIGHT, "---Cub3d---", true);
-	if (!game->mlx_win)
-		ft_free_error("MLX init\n", game);
-	mlx_set_cursor_mode(game->mlx_win, MLX_MOUSE_DISABLED);
-	draw_floor_and_ceiling(game);
-	set_textures(game);
-	game->foregr = mlx_new_image(game->mlx_win, W_WIDTH, W_HEIGHT);
-	mlx_image_to_window(game->mlx_win, game->foregr, 0, 0);
-	draw_walls(game);
-	init_minimap(game);
-	mlx_loop_hook(game->mlx_win, player_key, game);
-	mlx_loop(game->mlx_win);
-	exit_mlx(game);
 }

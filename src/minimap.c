@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:34:55 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 10:48:57 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:17:03 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	draw_minimap(t_player *perp, mlx_image_t *img, char **map, int m)
 		mm.pix_pos.x = mm.pix_start.x;
 		while (++mm.draw_x < MM_WIDTH)
 		{
-			tile = get_map_tile(map, mm.pix_pos, m);
+			tile = get_map_tile(map, (int)mm.pix_pos.x, (int)mm.pix_pos.y, m);
 			if (tile == ' ' || tile == '1')
 				mlx_put_pixel(img, mm.draw_x, mm.draw_y, 0x000000FF);
 			else

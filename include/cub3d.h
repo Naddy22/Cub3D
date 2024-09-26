@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:33:52 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 11:42:01 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:52:16 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct s_player
 typedef struct s_game
 {
 	char			**map;
-	int				map_height;
+	int				map_h;
 	char			*tex_path[4];
 	char			*color[2];
 	int				f_rgba;
@@ -142,11 +142,13 @@ void	draw_walls(t_game *game);
 
 //utils.c
 bool	ft_isspace(char c);
-char	get_map_tile(char **map, t_vect pos, int m);
+char	get_map_tile(char **map, int x, int y, int m);
 bool	is_line_empty(char *line);
 
 //mlx.c
 void	mlx(t_game *game);
+void	player_key(void *param);
+void	exit_mlx(t_game *game);
 
 //init.c
 void	draw_floor_and_ceiling(t_game *game);

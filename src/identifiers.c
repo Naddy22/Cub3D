@@ -6,7 +6,7 @@
 /*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:34:35 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 10:45:43 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:00:53 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ static int	ft_set_identifier(char **texture, char *id, char *line)
 		free(line);
 		ft_error_exit("Map identifier can't be defined twice\n");
 	}
-	if (!ft_strncmp(trim, "F ", 2) || !ft_strncmp(trim, "C ", 2))
+	if (!ft_strncmp(id, "F", 1) || !ft_strncmp(id, "C", 1))
 		*texture = ft_set_color(trim, line);
-	else if (ft_strncmp(trim, id, 3) == 0)
+	else if (ft_strncmp(trim, id, 2) == 0)
 	{
-		*texture = ft_strtrim(trim + 3, " ");
+		*texture = ft_strtrim(trim + 2, " \t\n\v\f\r");
 		if (*texture == NULL)
 		{
 			free(trim);
@@ -42,17 +42,17 @@ static int	ft_set_identifier(char **texture, char *id, char *line)
 int	ft_get_identifiers(t_game *game, char *line)
 {
 	if (ft_strnstr(line, "NO", ft_strlen(line)))
-		return (ft_set_identifier(&game->tex_path[NORTH], "NO ", line));
+		return (ft_set_identifier(&game->tex_path[NORTH], "NO", line));
 	else if (ft_strnstr(line, "SO", ft_strlen(line)))
-		return (ft_set_identifier(&game->tex_path[SOUTH], "SO ", line));
+		return (ft_set_identifier(&game->tex_path[SOUTH], "SO", line));
 	else if (ft_strnstr(line, "WE", ft_strlen(line)))
-		return (ft_set_identifier(&game->tex_path[WEST], "WE ", line));
+		return (ft_set_identifier(&game->tex_path[WEST], "WE", line));
 	else if (ft_strnstr(line, "EA", ft_strlen(line)))
-		return (ft_set_identifier(&game->tex_path[EAST], "EA ", line));
+		return (ft_set_identifier(&game->tex_path[EAST], "EA", line));
 	else if (ft_strnstr(line, "F", ft_strlen(line)))
-		return (ft_set_identifier(&game->color[FLOOR], "F ", line));
+		return (ft_set_identifier(&game->color[FLOOR], "F", line));
 	else if (ft_strnstr(line, "C", ft_strlen(line)))
-		return (ft_set_identifier(&game->color[CEILING], "C ", line));
+		return (ft_set_identifier(&game->color[CEILING], "C", line));
 	return (-1);
 }
 

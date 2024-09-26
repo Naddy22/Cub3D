@@ -6,7 +6,7 @@
 /*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:34:51 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 14:31:17 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/26 15:52:20 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,14 @@ static int	store_map(t_game *game, t_list *lst)
 	{
 		game->map[y] = lst->data;
 		ft_lstpop(&lst, not_free);
+		n = ft_strlen(game->map[y]) - 1;
+		if (game->map[y][n] == '\n')
+			game->map[y][n] = '\0';
 	}
 	while (++y < game->map_h)
 	{
 		x = 0;
 		n = ft_strlen(game->map[y]);
-		if (game->map[y][n - 1] == '\n')
-			game->map[y][--n] = '\0';
 		while (x < n && verify_map_tile(game, x, y, game->map_h) == 0)
 			x++;
 		if (x < n)

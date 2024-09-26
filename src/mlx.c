@@ -6,7 +6,7 @@
 /*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:34:59 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 14:51:25 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/26 15:55:46 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	exit_mlx(t_game *game)
 void	move(t_game *game, t_vect dir, double speed)
 {
 	t_vect	new_pos;
-	t_vect	hitbox;
+	t_vect	hbox;
 
 	new_pos = vect_sum(game->perp.pos, scal_product(speed, dir));
-	hitbox = vect_sum(game->perp.pos, scal_product(speed * 1.1, dir));
-	if (get_map_tile(game->map, (int)hitbox.x, (int)hitbox.y, game->map_h) != '0')
+	hbox = vect_sum(game->perp.pos, scal_product(speed * 1.1, dir));
+	if (get_map_tile(game->map, (int)hbox.x, (int)hbox.y, game->map_h) != '0')
 		return ;
 	game->perp.pos = new_pos;
 	draw_walls(game);

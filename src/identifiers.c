@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   identifiers.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/26 10:34:35 by namoisan          #+#    #+#             */
+/*   Updated: 2024/09/26 10:45:43 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-static int ft_set_identifier(char **texture, char *id, char *line)
+static int	ft_set_identifier(char **texture, char *id, char *line)
 {
-	char *trim;
-	
+	char	*trim;
+
 	trim = ft_strtrim(line, " \t\n\v\f\r");
 	if (*texture != NULL)
 	{
@@ -44,9 +56,9 @@ int	ft_get_identifiers(t_game *game, char *line)
 	return (-1);
 }
 
-static int ft_open_texture(char *texture)
+static int	ft_open_texture(char *texture)
 {
-	int fd;
+	int	fd;
 
 	if (texture == NULL)
 		return (FAIL);

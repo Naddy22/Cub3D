@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minmax.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:19:19 by jdemers           #+#    #+#             */
-/*   Updated: 2024/09/12 15:20:47 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/26 10:41:39 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-int		ft_min(int a, int b)
+int	ft_min(int a, int b)
 {
 	if (a <= b)
 		return (a);
 	return (b);
 }
 
-int		ft_max(int a, int b)
+int	ft_max(int a, int b)
 {
 	if (a >= b)
 		return (a);

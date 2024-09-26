@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/26 10:34:59 by namoisan          #+#    #+#             */
+/*   Updated: 2024/09/26 10:51:23 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void	exit_mlx(t_game *game)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < 4)
@@ -59,6 +71,7 @@ static void	player_key(void *param)
 		mlx_close_window(game->mlx_win);
 }
 
+// mlx_loop_hook(game->mlx_win, draw_walls, game);
 void	mlx(t_game *game)
 {
 	game->mlx_win = mlx_init(W_WIDTH, W_HEIGHT, "---Cub3d---", true);
@@ -70,7 +83,6 @@ void	mlx(t_game *game)
 	mlx_image_to_window(game->mlx_win, game->foregr, 0, 0);
 	draw_walls(game);
 	init_minimap(game);
-	// mlx_loop_hook(game->mlx_win, draw_walls, game);
 	mlx_loop_hook(game->mlx_win, player_key, game);
 	mlx_loop(game->mlx_win);
 	exit_mlx(game);

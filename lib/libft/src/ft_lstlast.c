@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:08:28 by jdemers           #+#    #+#             */
-/*   Updated: 2024/09/18 12:51:10 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/26 10:41:13 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_list	*ft_lstlast(t_list *lst)
 		return (lst);
 	return (ft_lstlast(lst->next));
 }
+
 t_list	*ft_lstfirst(t_list *lst)
 {
 	if (!lst || !lst->prev)

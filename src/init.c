@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/26 10:34:39 by namoisan          #+#    #+#             */
+/*   Updated: 2024/09/26 10:47:40 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	draw_floor_and_ceiling(t_game *game)
@@ -16,7 +28,7 @@ void	draw_floor_and_ceiling(t_game *game)
 				mlx_put_pixel(game->backgr, x, y, game->c_rgba);
 			else
 				mlx_put_pixel(game->backgr, x, y, game->f_rgba);
-				x++;
+			x++;
 		}
 		y++;
 	}
@@ -25,7 +37,7 @@ void	draw_floor_and_ceiling(t_game *game)
 
 void	set_textures(t_game *game)
 {
-	int directions;
+	int	directions;
 
 	directions = 0;
 	while (directions < 4)

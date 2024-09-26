@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/26 10:35:03 by namoisan          #+#    #+#             */
+/*   Updated: 2024/09/26 10:51:42 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static bool	ft_check_file_name(char *file)
@@ -14,7 +26,7 @@ static bool	ft_check_file_name(char *file)
 	return (false);
 }
 
-static char *ft_get_infos(t_game *game, int fd, int *id_count)
+static char	*ft_get_infos(t_game *game, int fd, int *id_count)
 {
 	char	*line;
 	int		result;

@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/26 10:34:22 by namoisan          #+#    #+#             */
+/*   Updated: 2024/09/26 10:44:37 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 char	*ft_set_color(char *trim_line, char *line)
 {
-	int count;
-	int i;
-	char *result;
+	int		count;
+	int		i;
+	char	*result;
 
 	count = 0;
 	i = -1;
@@ -19,19 +31,18 @@ char	*ft_set_color(char *trim_line, char *line)
 	}
 	result = ft_strdup(trim_line + 2);
 	if (result == NULL)
-		{
-			free(trim_line);
-			free(line);
-			ft_error_exit("Malloc failed\n");
-		}
+	{
+		free(trim_line);
+		free(line);
+		ft_error_exit("Malloc failed\n");
+	}
 	return (result);
 }
 
 static bool	ft_color_is_valid(char **split_c)
 {
-	int i;
-	int j;
-
+	int	i;
+	int	j;
 
 	if (!split_c[0] || !split_c[1] || !split_c[2])
 		return (false);
@@ -54,7 +65,7 @@ static bool	ft_color_is_valid(char **split_c)
 
 static void	get_rgb(unsigned int *rgb, char **split)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 3)
@@ -66,10 +77,10 @@ static void	get_rgb(unsigned int *rgb, char **split)
 
 static char	**get_split(char *str_color)
 {
-	char *tmp;
-	char **result;
-	int i;
-	int j;
+	char	*tmp;
+	char	**result;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -114,6 +125,6 @@ void	convert_color(t_game *game)
 	game->f_rgba = rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255;
 	get_rgb(rgb, ceiling);
 	game->c_rgba = rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 255;
-	ft_free_split(floor); 
+	ft_free_split(floor);
 	ft_free_split(ceiling);
 }

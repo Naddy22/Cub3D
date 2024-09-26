@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/26 10:34:55 by namoisan          #+#    #+#             */
+/*   Updated: 2024/09/26 10:48:57 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void	draw_dot(mlx_image_t *img)
@@ -27,7 +39,6 @@ static void	draw_x_dir(t_player *perp, mlx_image_t *img)
 	int	step;
 	int	stop;
 
-	// printf("draw_x_dir: dir=(%f ; %f)\n", perp->dir.x, perp->dir.y);
 	origin = MM_WIDTH * (perp->dir.x - perp->dir.y) / (2 * perp->dir.x);
 	step = 1;
 	if (perp->dir.x < 0)
@@ -50,7 +61,6 @@ static void	draw_y_dir(t_player *perp, mlx_image_t *img)
 	int	step;
 	int	stop;
 
-	// printf("draw_y_dir: dir=(%f ; %f)\n", perp->dir.x, perp->dir.y);
 	origin = MM_WIDTH * (perp->dir.y - perp->dir.x) / (2 * perp->dir.y);
 	step = 1;
 	if (perp->dir.y < 0)

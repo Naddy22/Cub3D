@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:33:52 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 14:52:16 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/26 15:33:38 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ enum	e_color
 	FLOOR,
 	CEILING,
 };
-
-// typedef struct s_map
-// {
-// 	char	**data;
-// }	t_map;
 
 typedef struct s_ray
 {
@@ -115,6 +110,7 @@ typedef struct s_game
 	mlx_image_t		*backgr;
 	mlx_image_t		*foregr;
 	mlx_image_t		*minimap[2];
+	bool			mouse_key;
 	t_player		perp;
 }	t_game;
 
@@ -136,6 +132,7 @@ void	convert_color(t_game *game);
 
 // free.c
 void	ft_free_game(t_game *game);
+void	exit_mlx(t_game *game);
 
 // raycasting.c
 void	draw_walls(t_game *game);
@@ -148,7 +145,7 @@ bool	is_line_empty(char *line);
 //mlx.c
 void	mlx(t_game *game);
 void	player_key(void *param);
-void	exit_mlx(t_game *game);
+void	general_key(mlx_key_data_t keydata, void *param);
 
 //init.c
 void	draw_floor_and_ceiling(t_game *game);

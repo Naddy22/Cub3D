@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:34:39 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 14:49:11 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/26 16:19:01 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	mlx(t_game *game)
 	game->mlx_win = mlx_init(W_WIDTH, W_HEIGHT, "---Cub3d---", true);
 	if (!game->mlx_win)
 		ft_free_error("MLX init\n", game);
-	mlx_set_cursor_mode(game->mlx_win, MLX_MOUSE_DISABLED);
 	draw_floor_and_ceiling(game);
 	set_textures(game);
 	game->foregr = mlx_new_image(game->mlx_win, W_WIDTH, W_HEIGHT);
 	mlx_image_to_window(game->mlx_win, game->foregr, 0, 0);
 	draw_walls(game);
 	init_minimap(game);
+	mlx_key_hook(game->mlx_win, general_key, game);
 	mlx_loop_hook(game->mlx_win, player_key, game);
 	mlx_loop(game->mlx_win);
 	exit_mlx(game);

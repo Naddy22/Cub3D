@@ -6,7 +6,7 @@
 /*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:35:09 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/26 14:19:28 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/27 13:43:37 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ t_ray	*init_ray(t_ray *ray, const t_player *perp, double cam_x)
 	ray->map_x = (int)perp->pos.x;
 	ray->map_y = (int)perp->pos.y;
 	ray->dir = vect_sum(perp->dir, scal_product(cam_x, perp->fov));
-	ray->delta_x = HUGE_VALF;
+	ray->delta_x = MAXFLOAT;
 	if (ray->dir.x != 0)
 		ray->delta_x = fabs(1 / ray->dir.x);
-	ray->delta_y = HUGE_VALF;
+	ray->delta_y = MAXFLOAT;
 	if (ray->dir.y != 0)
 		ray->delta_y = fabs(1 / ray->dir.y);
 	ray->ray_dist_x = (perp->pos.x - ray->map_x) * ray->delta_x;

@@ -6,7 +6,7 @@
 /*   By: jdemers <jdemers@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:34:59 by namoisan          #+#    #+#             */
-/*   Updated: 2024/09/27 13:48:08 by jdemers          ###   ########.fr       */
+/*   Updated: 2024/09/27 14:05:14 by jdemers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	player_key(void *param)
 		move(game, rotate(game->perp.dir, M_PI_2), SPEED * speed_norm);
 	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_A))
 		move(game, rotate(game->perp.dir, -M_PI_2), SPEED * speed_norm);
-	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(game->mlx_win, MLX_KEY_RIGHT))
 		rotate_player(game, ROT_SPEED * speed_norm);
 	else if (mlx_is_key_down(game->mlx_win, MLX_KEY_LEFT))
 		rotate_player(game, -ROT_SPEED * speed_norm);
